@@ -22,11 +22,20 @@ public class JwtUtil {
     @Value("${security.jwt.expiry-seconds}")
     private long expirySeconds;
 
-    public String generateToken(String subject, List<String> roles) {
+    public String generateToken(String clientId, List<String> roles) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirySeconds * 1000);
 
         return Jwts.builder()
+                .setIssuer(issuer)
+                .signWith(
+                        Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)),
+                        SignatureAlgorithm.HS256
+                )
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .setSubject(clientId)
+                .claim("roles", roles)
                 .compact();
     }
 }
