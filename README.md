@@ -78,3 +78,12 @@ This avoids having one centralized security service and fits better with zero tr
 ```bash
 docker-compose up --build
 ```
+### How to get authentication token
+```bash
+curl -X POST http://localhost:8100/token \
+  -H "Content-Type: application/json" \
+  -d '{
+        "client_id": "<client_id>",
+        "client_secret": "<client_secret>"
+      }'
+```
