@@ -142,7 +142,7 @@ services:
       - "8081:8080"
     networks:
       - resto-net
-      
+
   auth-utility-service:
     build: ./auth-utility-service
     container_name: auth-utility-service
@@ -158,8 +158,8 @@ services:
       STAFF_CLIENT_ID: ${STAFF_CLIENT_ID}
       STAFF_CLIENT_SECRET: ${STAFF_CLIENT_SECRET}
 
-      SERVICE_CLIENT_ID: ${SERVICE_CLIENT_ID}
-      SERVICE_CLIENT_SECRET: ${SERVICE_CLIENT_SECRET}
+      RESTAURANT_SERVICE_CLIENT_ID: ${RESTAURANT_SERVICE_CLIENT_ID}
+      RESTAURANT_SERVICE_CLIENT_SECRET: ${RESTAURANT_SERVICE_CLIENT_SECRET}
 
     ports:
       - "9000:8080"

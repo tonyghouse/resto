@@ -96,3 +96,5 @@ jacoco/
 ####################################
 tmp/
 temp/
+
+*application-local.properties
