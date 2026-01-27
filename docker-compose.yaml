@@ -12,7 +12,7 @@ volumes:
 
 services:
   postgres-restaurant:
-    image: postgres:15
+    image: postgres:16.6
     container_name: postgres-restaurant
     environment:
       POSTGRES_DB: ${RESTAURANT_DB_NAME}
@@ -26,7 +26,7 @@ services:
       - resto-net
 
   postgres-payment:
-    image: postgres:15
+    image: postgres:16.6
     container_name: postgres-payment
     environment:
       POSTGRES_DB: ${PAYMENT_DB_NAME}
@@ -73,25 +73,17 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
-      # SASL/PLAIN
-      KAFKA_LISTENERS: SASL_PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: SASL_PLAINTEXT://kafka:9092
-      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: SASL_PLAINTEXT
-      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: PLAIN
-      KAFKA_SASL_ENABLED_MECHANISMS: PLAIN
-
-      # JAAS config
-      KAFKA_OPTS: >
-        -Djava.security.auth.login.config=/etc/kafka/kafka_jaas.conf
-
+      KAFKA_ZOOKEEPER_SET_ACL: "false"
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
     volumes:
       - kafka-data:/var/lib/kafka/data
-      - ./infra/kafka/kafka_jaas.conf:/etc/kafka/kafka_jaas.conf
     networks:
       - resto-net
+
   restaurant-service:
     build: ./restaurant-service
     container_name: restaurant-service
