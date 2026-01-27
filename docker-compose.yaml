@@ -101,11 +101,11 @@ services:
       - kafka
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      DB_HOST: postgres-restaurant
-      DB_PORT: 5432
-      DB_NAME: ${RESTAURANT_DB_NAME}
-      DB_USER: ${RESTAURANT_DB_USER}
-      DB_PASSWORD: ${RESTAURANT_DB_PASSWORD}
+      RESTAURANT_DB_HOST: postgres-restaurant
+      RESTAURANT_DB_PORT: 5432
+      RESTAURANT_DB_NAME: ${RESTAURANT_DB_NAME}
+      RESTAURANT_DB_USER: ${RESTAURANT_DB_USER}
+      RESTAURANT_DB_PASSWORD: ${RESTAURANT_DB_PASSWORD}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_USERNAME: ${REDIS_USERNAME}
@@ -114,6 +114,9 @@ services:
       KAFKA_PASSWORD: ${KAFKA_PASSWORD}
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       PAYMENT_SERVICE_URL: http://payment-service:8080
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ISSUER: ${JWT_ISSUER}
+
     ports:
       - "8080:8080"
     networks:
@@ -126,10 +129,11 @@ services:
       - kafka
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      DB_HOST: postgres-payment
-      DB_PORT: 5432
-      DB_NAME: ${PAYMENT_DB_NAME}
-      DB_USER: ${PAYMENT_DB_USER}
+      PAYMENT_DB_HOST: postgres-payment
+      PAYMENT_DB_PORT: 5433
+      PAYMENT_DB_NAME: ${PAYMENT_DB_NAME}
+      PAYMENT_DB_USER: ${PAYMENT_DB_USER}
+      PAYMENT_DB_PASSWORD: ${PAYMENT_DB_PASSWORD}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_USERNAME: ${REDIS_USERNAME}
@@ -138,6 +142,8 @@ services:
       KAFKA_PASSWORD: ${KAFKA_PASSWORD}
       DB_PASSWORD: ${PAYMENT_DB_PASSWORD}
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ISSUER: ${JWT_ISSUER}
     ports:
       - "8081:8080"
     networks:
