@@ -1,0 +1,37 @@
+CREATE SEQUENCE idempotency_key_seq START 1;
+
+CREATE TABLE idempotency_key (
+    id BIGINT PRIMARY KEY DEFAULT nextval('idempotency_key_seq'),
+    idempotency_key VARCHAR(255) NOT NULL,
+    payment_id UUID NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    CONSTRAINT uk_idempotency_key UNIQUE (idempotency_key)
+);
+
+
+CREATE TABLE payment (
+    payment_id UUID PRIMARY KEY,
+    order_id UUID,
+    method VARCHAR(50),
+    status VARCHAR(50),
+    total_amount NUMERIC(19,2),
+    tax_amount NUMERIC(19,2),
+    payable_amount NUMERIC(19,2),
+    currency VARCHAR(10),
+    retry_count INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ
+);
+
+CREATE TABLE refund (
+    refund_id UUID PRIMARY KEY,
+    payment_id UUID NOT NULL,
+    refund_amount NUMERIC(19,2),
+    status VARCHAR(50),
+    reason VARCHAR(255),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+
+CREATE INDEX idx_payment_order_id ON payment(order_id);
+CREATE INDEX idx_refund_payment_id ON refund(payment_id);
