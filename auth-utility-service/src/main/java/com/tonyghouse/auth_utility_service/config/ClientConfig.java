@@ -14,13 +14,13 @@ public class ClientConfig {
 
     private Client admin;
     private Client staff;
+    private Client customer;
     private Client restaurantService;
-
-
 
     public Client resolve(String clientId) {
         if (admin != null && admin.getId().equals(clientId)) return admin;
         if (staff != null && staff.getId().equals(clientId)) return staff;
+        if (customer != null && customer.getId().equals(clientId)) return customer;
         if (restaurantService != null && restaurantService.getId().equals(clientId)) return restaurantService;
         return null;
     }
