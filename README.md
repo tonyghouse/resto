@@ -76,11 +76,11 @@ This avoids having one centralized security service and fits better with zero tr
 
 ### Start the platform
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 ### How to get authentication token
 ```bash
-curl -X POST http://localhost:8100/token \
+curl -X POST http://localhost:9000/token \
   -H "Content-Type: application/json" \
   -d '{
         "client_id": "<client_id>",
