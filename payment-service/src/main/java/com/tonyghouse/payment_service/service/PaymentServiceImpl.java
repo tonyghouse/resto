@@ -1,13 +1,15 @@
 package com.tonyghouse.payment_service.service;
 
+import com.tonyghouse.payment_service.constants.PaymentResult;
 import com.tonyghouse.payment_service.constants.PaymentStatus;
 import com.tonyghouse.payment_service.dto.CreatePaymentRequest;
 import com.tonyghouse.payment_service.entity.Payment;
-import com.tonyghouse.payment_service.exception.InvalidPaymentException;
-import com.tonyghouse.payment_service.exception.PaymentNotFoundException;
+import com.tonyghouse.payment_service.exception.RestoPaymentException;
+import com.tonyghouse.payment_service.proxy.PaymentGatewayProcessor;
 import com.tonyghouse.payment_service.repo.IdempotencyKeyRepository;
 import com.tonyghouse.payment_service.repo.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final IdempotencyKeyRepository idempotencyKeyRepository;
+    private final PaymentGatewayProcessor paymentGatewayProcessor;
     private final Clock clock;
 
     @Override
@@ -64,22 +67,58 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Payment getPayment(UUID paymentId) {
-        return paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new PaymentNotFoundException(paymentId));
-    }
 
     private void validateAmounts(CreatePaymentRequest request) {
 
         if (request.getPayableAmount()
                 .compareTo(request.getTotalAmount().add(request.getTaxAmount())) != 0) {
-            throw new InvalidPaymentException("Payable amount mismatch");
+            throw new RestoPaymentException("Payable amount mismatch", HttpStatus.BAD_REQUEST);
         }
 
         if (request.getTotalAmount().signum() <= 0) {
-            throw new InvalidPaymentException("Total amount must be positive");
+            throw new RestoPaymentException("Total amount must be positive", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public Payment processPayment(UUID paymentId) {
+
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new RestoPaymentException("Payment not found: "+paymentId, HttpStatus.INTERNAL_SERVER_ERROR));
+
+        if (payment.getStatus() != PaymentStatus.INITIATED) {
+            return payment; // idempotent processing
+        }
+
+        payment.setStatus(PaymentStatus.PROCESSING);
+        payment.setUpdatedAt(clock.instant());
+        paymentRepository.save(payment);
+
+        PaymentResult result = paymentGatewayProcessor.process(payment);
+
+        switch (result) {
+            case SUCCESS -> {
+                payment.setStatus(PaymentStatus.SUCCESS);
+            }
+            case FAILURE -> {
+                payment.setStatus(PaymentStatus.FAILED);
+            }
+            case TIMEOUT -> {
+                payment.setStatus(PaymentStatus.RETRYING);
+                payment.setRetryCount(payment.getRetryCount() + 1);
+            }
+        }
+
+        payment.setUpdatedAt(clock.instant());
+        return paymentRepository.save(payment);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Payment getPayment(UUID paymentId) {
+        return paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new RestoPaymentException("Payment not found: "+paymentId, HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+
 }

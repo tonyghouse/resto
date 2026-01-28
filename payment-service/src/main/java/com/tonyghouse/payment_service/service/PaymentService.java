@@ -10,4 +10,6 @@ public interface PaymentService {
     Payment createPayment(CreatePaymentRequest request, String idempotencyKey);
 
     Payment getPayment(UUID paymentId);
+
+    Payment processPayment(UUID paymentId);
 }

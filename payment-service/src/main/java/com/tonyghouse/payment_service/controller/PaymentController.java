@@ -1,17 +1,17 @@
 package com.tonyghouse.payment_service.controller;
 
-import com.tonyghouse.payment_service.constants.PaymentStatus;
 import com.tonyghouse.payment_service.dto.CreatePaymentRequest;
 import com.tonyghouse.payment_service.dto.CreatePaymentResponse;
 import com.tonyghouse.payment_service.dto.PaymentResponse;
 import com.tonyghouse.payment_service.dto.RefundRequest;
 import com.tonyghouse.payment_service.dto.RefundResponse;
 import com.tonyghouse.payment_service.entity.Payment;
+import com.tonyghouse.payment_service.entity.Refund;
+import com.tonyghouse.payment_service.mapper.PaymentMapper;
 import com.tonyghouse.payment_service.service.PaymentService;
+import com.tonyghouse.payment_service.service.RefundService;
 import jakarta.validation.Valid;
 
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
@@ -34,32 +34,40 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    private final RefundService refundService;
+
     @PostMapping
-    //@PreAuthorize("hasRole('RESTAURANT_SERVICE')")
+    @PreAuthorize("hasRole('RESTAURANT_SERVICE')")
     public ResponseEntity<CreatePaymentResponse> createPayment(
             @RequestHeader("Idempotency-Key") String idempotencyKey,
             @Valid @RequestBody CreatePaymentRequest request) {
-        Payment payment = paymentService.createPayment(request, idempotencyKey);
-        CreatePaymentResponse createPaymentResponse = new CreatePaymentResponse();
-        createPaymentResponse.setPaymentId(payment.getPaymentId());
-        createPaymentResponse.setOrderId(payment.getOrderId());
-        createPaymentResponse.setStatus(payment.getStatus());
-        createPaymentResponse.setPayableAmount(payment.getPayableAmount());
-        createPaymentResponse.setCurrency(payment.getCurrency());
-        createPaymentResponse.setCreatedAt(payment.getCreatedAt());
 
+        Payment payment = paymentService.createPayment(request, idempotencyKey);
+        CreatePaymentResponse createPaymentResponse = PaymentMapper.mapToCreatePaymentResponse(payment);
         return new ResponseEntity<>(createPaymentResponse, HttpStatus.CREATED);
     }
 
+    @PostMapping("/{paymentId}/process")
+    @PreAuthorize("hasRole('RESTAURANT_SERVICE')")
+    public ResponseEntity<PaymentResponse> processPayment(
+            @PathVariable UUID paymentId
+    ) {
+        Payment payment = paymentService.processPayment(paymentId);
+        return ResponseEntity.ok(PaymentMapper.toPaymentResponse(payment));
+    }
+
+
     @GetMapping("/{paymentId}")
-    //@PreAuthorize("hasRole('RESTAURANT_SERVICE')")
+    @PreAuthorize("hasRole('RESTAURANT_SERVICE')")
     public ResponseEntity<PaymentResponse> getPayment(@PathVariable UUID paymentId) {
-        return ResponseEntity.ok().build();
+        Payment payment = paymentService.getPayment(paymentId);
+        return ResponseEntity.ok(PaymentMapper.toPaymentResponse(payment));
     }
 
     @PostMapping("/{paymentId}/refund")
-    //@PreAuthorize("hasRole('RESTAURANT_SERVICE')")
+    @PreAuthorize("hasRole('RESTAURANT_SERVICE')")
     public ResponseEntity<RefundResponse> refund(@PathVariable UUID paymentId, @Valid @RequestBody RefundRequest request) {
-        return ResponseEntity.ok().build();
+        Refund refund = refundService.refund(paymentId, request);
+        return ResponseEntity.ok(PaymentMapper.toRefundResponse(refund));
     }
 }
