@@ -16,10 +16,17 @@ public class RestoRestaurantException extends RuntimeException {
         this.errorCode = String.valueOf(httpStatus.value());
     }
 
+    public RestoRestaurantException(String message, Throwable cause,  HttpStatus httpStatus) {
+        super(message, cause);
+        this.errorCode = String.valueOf(httpStatus.value());
+    }
+
     public RestoRestaurantException(String message, String errorCode, Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;
     }
+
+
 
     public String getErrorCode() {
         return errorCode;
