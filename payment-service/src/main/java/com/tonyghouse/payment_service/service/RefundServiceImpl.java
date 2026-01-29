@@ -32,7 +32,6 @@ public class RefundServiceImpl implements RefundService {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new RestoPaymentException("Payment not found: "+paymentId, HttpStatus.INTERNAL_SERVER_ERROR));
 
-        // ---------- State Guard ----------
         if (payment.getStatus() != PaymentStatus.SUCCESS) {
             throw new RestoPaymentException("Payment not successful", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,7 +56,6 @@ public class RefundServiceImpl implements RefundService {
 
         refundRepository.save(refund);
 
-        // ---------- Final Refund State ----------
         if (newTotal.compareTo(payment.getPayableAmount()) == 0) {
             payment.setStatus(PaymentStatus.REFUNDED);
             payment.setUpdatedAt(clock.instant());
