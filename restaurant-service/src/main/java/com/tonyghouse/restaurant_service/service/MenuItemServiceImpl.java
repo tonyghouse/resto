@@ -4,8 +4,11 @@ import com.tonyghouse.restaurant_service.dto.CreateMenuItemRequest;
 import com.tonyghouse.restaurant_service.dto.MenuItemResponse;
 import com.tonyghouse.restaurant_service.dto.UpdateMenuItemRequest;
 import com.tonyghouse.restaurant_service.entity.MenuItem;
+import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
+import com.tonyghouse.restaurant_service.mapper.MenuItemMapper;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -32,13 +35,13 @@ public class MenuItemServiceImpl implements MenuItemService {
         menuItem.setAvailable(true);
         menuItem.setCreatedAt(Instant.now());
 
-        return toResponse(repository.save(menuItem));
+        return MenuItemMapper.toMenuItemResponse(repository.save(menuItem));
     }
 
     @Override
     public MenuItemResponse get(UUID itemId) {
         return repository.findById(itemId)
-                .map(this::toResponse)
+                .map(MenuItemMapper::toMenuItemResponse)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Menu item not found"));
     }
@@ -47,7 +50,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     public List<MenuItemResponse> getAll() {
         return repository.findAll()
                 .stream()
-                .map(this::toResponse)
+                .map(MenuItemMapper::toMenuItemResponse)
                 .toList();
     }
 
@@ -55,7 +58,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     public MenuItemResponse update(UUID itemId, UpdateMenuItemRequest request) {
         MenuItem entity = repository.findById(itemId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Menu item not found"));
+                        new RestoRestaurantException("Menu item not found", HttpStatus.INTERNAL_SERVER_ERROR));
 
         entity.setName(request.getName());
         entity.setDescription(request.getDescription());
@@ -64,30 +67,18 @@ public class MenuItemServiceImpl implements MenuItemService {
         entity.setCategory(request.getCategory());
         entity.setFoodType(request.getFoodType());
 
-        return toResponse(repository.save(entity));
+        return MenuItemMapper.toMenuItemResponse(repository.save(entity));
     }
 
     @Override
     public MenuItemResponse updateAvailability(UUID itemId, boolean available) {
         MenuItem entity = repository.findById(itemId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Menu item not found"));
+                        new RestoRestaurantException("Menu item not found", HttpStatus.INTERNAL_SERVER_ERROR));
 
         entity.setAvailable(available);
-        return toResponse(repository.save(entity));
+        return MenuItemMapper.toMenuItemResponse(repository.save(entity));
     }
 
-    private MenuItemResponse toResponse(MenuItem e) {
-        MenuItemResponse r = new MenuItemResponse();
-        r.setId(e.getId());
-        r.setName(e.getName());
-        r.setDescription(e.getDescription());
-        r.setPrice(e.getPrice());
-        r.setPreparationTime(e.getPreparationTime());
-        r.setCategory(e.getCategory());
-        r.setFoodType(e.getFoodType());
-        r.setAvailable(e.getAvailable());
-        r.setCreatedAt(e.getCreatedAt());
-        return r;
-    }
+
 }

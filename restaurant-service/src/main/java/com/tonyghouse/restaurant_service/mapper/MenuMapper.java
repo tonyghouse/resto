@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.tonyghouse.restaurant_service.dto.MenuItemSummaryResponse;
 import com.tonyghouse.restaurant_service.dto.MenuResponse;
 import com.tonyghouse.restaurant_service.entity.Menu;
+import com.tonyghouse.restaurant_service.entity.MenuItem;
 import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -67,5 +69,15 @@ public class MenuMapper {
         } catch (JsonProcessingException e) {
             throw new RestoRestaurantException("Failed to serialize MenuResponse list for cache", e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public static MenuItemSummaryResponse toMenuItemSummaryResponse(MenuItem item) {
+        MenuItemSummaryResponse r = new MenuItemSummaryResponse();
+        r.setId(item.getId());
+        r.setName(item.getName());
+        r.setPrice(item.getPrice());
+        r.setAvailable(item.getAvailable());
+        r.setFoodType(item.getFoodType());
+        return r;
     }
 }
