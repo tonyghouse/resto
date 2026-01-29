@@ -13,6 +13,7 @@ import com.tonyghouse.restaurant_service.entity.MenuItem;
 import com.tonyghouse.restaurant_service.entity.Order;
 import com.tonyghouse.restaurant_service.entity.OrderItem;
 import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
+import com.tonyghouse.restaurant_service.mapper.OrderMapper;
 import com.tonyghouse.restaurant_service.repo.BranchRepository;
 import com.tonyghouse.restaurant_service.repo.ComboRepository;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
@@ -88,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
             orderItemRepository.save(item);
         }
 
-        return toResponse(order, breakdown);
+        return OrderMapper.toResponse(order, breakdown);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
         PriceBreakdown breakdown = new PriceBreakdown();
         breakdown.setGrandTotal(order.getTotalAmount());
 
-        return toResponse(order, breakdown);
+        return OrderMapper.toResponse(order, breakdown);
     }
 
     @Override
@@ -113,12 +114,5 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
-    private OrderResponse toResponse(Order order, PriceBreakdown breakdown) {
-        OrderResponse r = new OrderResponse();
-        r.setOrderId(order.getId());
-        r.setStatus(order.getStatus().name());
-        r.setBreakdown(breakdown);
-        r.setCreatedAt(order.getCreatedAt());
-        return r;
-    }
+
 }

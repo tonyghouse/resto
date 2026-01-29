@@ -2,8 +2,10 @@ package com.tonyghouse.restaurant_service.service;
 
 import com.tonyghouse.restaurant_service.dto.OrderItemRequest;
 import com.tonyghouse.restaurant_service.dto.PriceBreakdown;
+import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.repo.ComboRepository;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -35,15 +37,15 @@ public class OrderPricingServiceImpl implements OrderPricingService {
 
             if ("ITEM".equals(req.getItemType())) {
                 unitPrice = menuItemRepository.findById(req.getItemId())
-                        .orElseThrow(() -> new IllegalArgumentException("Item not found"))
+                        .orElseThrow(() -> new RestoRestaurantException("Item not found", HttpStatus.NOT_FOUND))
                         .getPrice();
 
             } else if ("COMBO".equals(req.getItemType())) {
                 unitPrice = comboRepository.findById(req.getItemId())
-                        .orElseThrow(() -> new IllegalArgumentException("Combo not found"))
+                        .orElseThrow(() -> new RestoRestaurantException("Combo not found", HttpStatus.NOT_FOUND))
                         .getComboPrice();
             } else {
-                throw new IllegalArgumentException("Invalid item type");
+                throw new RestoRestaurantException("Invalid item type",HttpStatus.BAD_REQUEST);
             }
 
             itemsTotal = itemsTotal.add(
