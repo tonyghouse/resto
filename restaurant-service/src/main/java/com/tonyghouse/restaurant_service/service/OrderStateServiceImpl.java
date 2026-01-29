@@ -28,7 +28,7 @@ public class OrderStateServiceImpl implements OrderStateService {
     private final OrderRepository orderRepository;
     private final OrderStatusHistoryRepository historyRepository;
     private final Clock clock;
-    private OrderEventPublisher orderEventPublisher;
+    private final OrderEventPublisher orderEventPublisher;
 
 
     @Override
