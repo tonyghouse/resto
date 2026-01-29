@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class ComboServiceImpl implements ComboService {
 
     private final ComboRepository comboRepository;
     private final MenuItemRepository menuItemRepository;
+    private final Clock clock;
 
     @Override
     public ComboResponse create(CreateComboRequest request) {
@@ -32,7 +34,7 @@ public class ComboServiceImpl implements ComboService {
         combo.setName(request.getName());
         combo.setDescription(request.getDescription());
         combo.setComboPrice(request.getComboPrice());
-        combo.setCreatedAt(Instant.now());
+        combo.setCreatedAt(Instant.now(clock));
 
         return ComboMapper.toResponse(comboRepository.save(combo));
     }

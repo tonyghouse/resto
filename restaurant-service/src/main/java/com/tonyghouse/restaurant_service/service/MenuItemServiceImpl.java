@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class MenuItemServiceImpl implements MenuItemService {
 
     private final MenuItemRepository repository;
+    private final Clock clock;
 
 
     @Override
@@ -33,7 +35,7 @@ public class MenuItemServiceImpl implements MenuItemService {
         menuItem.setCategory(request.getCategory());
         menuItem.setFoodType(request.getFoodType());
         menuItem.setAvailable(true);
-        menuItem.setCreatedAt(Instant.now());
+        menuItem.setCreatedAt(Instant.now(clock));
 
         return MenuItemMapper.toMenuItemResponse(repository.save(menuItem));
     }

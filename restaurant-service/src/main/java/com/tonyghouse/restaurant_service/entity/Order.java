@@ -2,6 +2,7 @@ package com.tonyghouse.restaurant_service.entity;
 
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +40,9 @@ public class Order extends BaseEntity {
 
     private BigDecimal totalAmount;
     private UUID paymentId;
+
+    @Column(nullable = false)
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
