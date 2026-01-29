@@ -46,11 +46,10 @@ services:
       redis-server
       --appendonly yes
       --requirepass ${REDIS_PASSWORD}
-      --user ${REDIS_USERNAME} on >${REDIS_PASSWORD} ~* +@all
-    volumes:
-      - redis-data:/data
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data
     networks:
       - resto-net
 
@@ -100,7 +99,6 @@ services:
       RESTAURANT_DB_PASSWORD: ${RESTAURANT_DB_PASSWORD}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_USERNAME: ${REDIS_USERNAME}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       KAFKA_USERNAME: ${KAFKA_USERNAME}
       KAFKA_PASSWORD: ${KAFKA_PASSWORD}
@@ -122,13 +120,12 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       PAYMENT_DB_HOST: postgres-payment
-      PAYMENT_DB_PORT: 5433
+      PAYMENT_DB_PORT: 5432
       PAYMENT_DB_NAME: ${PAYMENT_DB_NAME}
       PAYMENT_DB_USER: ${PAYMENT_DB_USER}
       PAYMENT_DB_PASSWORD: ${PAYMENT_DB_PASSWORD}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_USERNAME: ${REDIS_USERNAME}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       KAFKA_USERNAME: ${KAFKA_USERNAME}
       KAFKA_PASSWORD: ${KAFKA_PASSWORD}
@@ -158,6 +155,9 @@ services:
 
       RESTAURANT_SERVICE_CLIENT_ID: ${RESTAURANT_SERVICE_CLIENT_ID}
       RESTAURANT_SERVICE_CLIENT_SECRET: ${RESTAURANT_SERVICE_CLIENT_SECRET}
+
+      CUSTOMER_CLIENT_ID: ${CUSTOMER_CLIENT_ID}
+      CUSTOMER_CLIENT_SECRET: ${CUSTOMER_CLIENT_SECRET}
 
     ports:
       - "9000:8080"
