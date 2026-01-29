@@ -1,11 +1,13 @@
 package com.tonyghouse.restaurant_service.service;
 
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
+import com.tonyghouse.restaurant_service.dto.OrderStatusChangedEvent;
 import com.tonyghouse.restaurant_service.dto.OrderStatusHistoryResponse;
 import com.tonyghouse.restaurant_service.entity.Order;
 import com.tonyghouse.restaurant_service.entity.OrderStatusHistory;
 import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.helper.OrderStateRules;
+import com.tonyghouse.restaurant_service.publisher.OrderEventPublisher;
 import com.tonyghouse.restaurant_service.repo.OrderRepository;
 import com.tonyghouse.restaurant_service.repo.OrderStatusHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class OrderStateServiceImpl implements OrderStateService {
     private final OrderRepository orderRepository;
     private final OrderStatusHistoryRepository historyRepository;
     private final Clock clock;
+    private OrderEventPublisher orderEventPublisher;
 
 
     @Override
@@ -80,6 +83,14 @@ public class OrderStateServiceImpl implements OrderStateService {
         history.setChangedAt(Instant.now(clock));
 
         historyRepository.save(history);
+        orderEventPublisher.publish(
+                new OrderStatusChangedEvent(
+                        order.getId(),
+                        current,
+                        target,
+                        history.getChangedAt()
+                )
+        );
     }
 
     @Override
