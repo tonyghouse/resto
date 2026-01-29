@@ -73,11 +73,16 @@ This avoids having one centralized security service and fits better with zero tr
 - Docker
 - Docker Compose
 
-### Start the platform
+# Resto API - Usage Guide
+
+## Start the Platform
+
 ```bash
 docker compose up --build
 ```
-### How to get authentication token
+
+## Get Authentication Token
+
 ```bash
 curl -X POST http://localhost:9000/token \
   -H "Content-Type: application/json" \
@@ -86,3 +91,10 @@ curl -X POST http://localhost:9000/token \
         "client_secret": "<client_secret>"
       }'
 ```
+
+## Using Postman Collection
+
+1. Open Postman
+2. Click **Import**
+3. Select `Resto.postman_collection.json`
+4. The collection contains all APIs with authentication token pre-configured

@@ -1,0 +1,4788 @@
+{
+  "info": {
+    "_postman_id": "76659383-0e78-47a2-9ca0-617096a81fe1",
+    "name": "Resto",
+    "description": "Resto API collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30811799"
+  },
+  "item": [
+    {
+      "name": "Auth Utility Service",
+      "item": [
+        {
+          "name": "get Admin Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"admin\",\n    \"client_secret\": \"resto_admin_1@3$5^7*9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get Staff Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"staff\",\n    \"client_secret\": \"resto_staff_1@3$5^7*9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get Customer Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"customer\",\n    \"client_secret\": \"resto_customer_1@3$5^7*9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get Restaurant Service Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"restaurant-service\",\n    \"client_secret\": \"resto_restaurant_1@3$5^7*9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "create payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxODcyMSwiZXhwIjoxNzY5NjIwNTIxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.vu2tHtndpa8qQCNKJoNd78v9sylRTnbORyH2XwWq220\"",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"method\": \"UPI\",\n  \"currency\": \"INR\",\n  \"totalAmount\": 1000.00,\n  \"taxAmount\": 180.00,\n  \"payableAmount\": 1180.00\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "example res - create payment",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNDc2OCwiZXhwIjoxNzY5NjE2NTY4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.4PPho_C3lxBRqmlpq0m1rfFwiZZoPrErQKLMvuvA0MM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"method\": \"UPI\",\n  \"currency\": \"INR\",\n  \"totalAmount\": 1000.00,\n  \"taxAmount\": 180.00,\n  \"payableAmount\": 1180.00\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/api/payments",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "payments"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 28 Jan 2026 15:48:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"createdAt\": \"2026-01-28T15:48:45.499732Z\",\n    \"currency\": \"INR\",\n    \"orderId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"payableAmount\": 1180,\n    \"paymentId\": \"5c4cbd13-795a-41ee-805a-eb15aeeaf298\",\n    \"status\": \"INITIATED\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "process payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNDc2OCwiZXhwIjoxNzY5NjE2NTY4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.4PPho_C3lxBRqmlpq0m1rfFwiZZoPrErQKLMvuvA0MM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298/process",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "payments",
+                "5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+                "process"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "example res- process payment",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNDc2OCwiZXhwIjoxNzY5NjE2NTY4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.4PPho_C3lxBRqmlpq0m1rfFwiZZoPrErQKLMvuvA0MM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298/process",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "payments",
+                    "5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+                    "process"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 28 Jan 2026 16:08:39 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"createdAt\": \"2026-01-28T15:48:45.499732Z\",\n    \"currency\": \"INR\",\n    \"method\": \"UPI\",\n    \"orderId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"payableAmount\": 1180,\n    \"paymentId\": \"5c4cbd13-795a-41ee-805a-eb15aeeaf298\",\n    \"status\": \"SUCCESS\",\n    \"taxAmount\": 180,\n    \"totalAmount\": 1000,\n    \"updatedAt\": \"2026-01-28T16:08:39.625335Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "get payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNjYxOCwiZXhwIjoxNzY5NjE4NDE4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.pMth6QmiZOnThfNr-rWP5w1hcCBqacQoiXSNgd_ctQQ",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "payments",
+                "5c4cbd13-795a-41ee-805a-eb15aeeaf298"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "example get payment 200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNjYxOCwiZXhwIjoxNzY5NjE4NDE4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.pMth6QmiZOnThfNr-rWP5w1hcCBqacQoiXSNgd_ctQQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "payments",
+                    "5c4cbd13-795a-41ee-805a-eb15aeeaf298"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 28 Jan 2026 16:10:31 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"createdAt\": \"2026-01-28T15:48:45.499732Z\",\n    \"currency\": \"INR\",\n    \"method\": \"UPI\",\n    \"orderId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"payableAmount\": 1180,\n    \"paymentId\": \"5c4cbd13-795a-41ee-805a-eb15aeeaf298\",\n    \"status\": \"SUCCESS\",\n    \"taxAmount\": 180,\n    \"totalAmount\": 1000,\n    \"updatedAt\": \"2026-01-28T16:08:39.625335Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNjk1OCwiZXhwIjoxNzY5NjE4NzU4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.5Q1BxSNBvwlQBMEg0_bTLK8tHGLOElh5ZyCGvJsgacQ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\":-1.00,\n    \"reason\": \"order returned\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298/refund",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "payments",
+                "5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+                "refund"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "example res - refund",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTYxNjk1OCwiZXhwIjoxNzY5NjE4NzU4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.5Q1BxSNBvwlQBMEg0_bTLK8tHGLOElh5ZyCGvJsgacQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"amount\":1180.00,\n    \"reason\": \"order returned\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/api/payments/5c4cbd13-795a-41ee-805a-eb15aeeaf298/refund",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "payments",
+                    "5c4cbd13-795a-41ee-805a-eb15aeeaf298",
+                    "refund"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 28 Jan 2026 16:17:29 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"createdAt\": \"2026-01-28T16:17:29.348408Z\",\n    \"paymentId\": \"5c4cbd13-795a-41ee-805a-eb15aeeaf298\",\n    \"refundAmount\": 1180,\n    \"refundId\": \"c092d05b-b599-4355-a323-98f34ad4c515\",\n    \"status\": \"SUCCESS\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restaurant Service",
+      "item": [
+        {
+          "name": "Branch",
+          "item": [
+            {
+              "name": "create branch",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\":\"resto-whitefield\",\n    \"location\":\"whitefield\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/branches",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - create branch",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\":\"resto-whitefield\",\n    \"location\":\"whitefield\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 00:14:48 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"createdAt\": \"2026-01-29T00:14:48.289906Z\",\n    \"id\": \"2d59d8eb-8fde-430f-89da-a56e89eae10b\",\n    \"location\": \"whitefield\",\n    \"name\": \"resto-whitefield\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get branch",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/d0b12308-083e-45cc-b101-5de200a5220c",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "d0b12308-083e-45cc-b101-5de200a5220c"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get branch",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/d0b12308-083e-45cc-b101-5de200a5220c",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "d0b12308-083e-45cc-b101-5de200a5220c"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 00:34:39 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"createdAt\": \"2026-01-29T00:34:30.511764Z\",\n    \"id\": \"d0b12308-083e-45cc-b101-5de200a5220c\",\n    \"location\": \"whitefield\",\n    \"name\": \"resto-whitefield\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get branches",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDE4MiwiZXhwIjoxNzY5NjYxOTgyLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.eB4U_a-8WXt__iKUm86TP0kAl5yViIvrAWxK5VnNpqE",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get branches",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 00:35:57 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "[\n    {\n        \"createdAt\": \"2026-01-29T00:34:30.511764Z\",\n        \"id\": \"d0b12308-083e-45cc-b101-5de200a5220c\",\n        \"location\": \"whitefield\",\n        \"name\": \"resto-whitefield\"\n    },\n    {\n        \"createdAt\": \"2026-01-29T00:35:54.119151Z\",\n        \"id\": \"388ddd81-e1ac-44aa-995d-a47e1143ae3d\",\n        \"location\": \"yelhanka\",\n        \"name\": \"resto-yelhanka\"\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "update branch",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\":\"resto - yelhanka new town\",\n    \"location\":\"yelhanka new town\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/388ddd81-e1ac-44aa-995d-a47e1143ae3d",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "388ddd81-e1ac-44aa-995d-a47e1143ae3d"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - update branch",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\":\"resto - yelhanka new town\",\n    \"location\":\"yelhanka new town\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/388ddd81-e1ac-44aa-995d-a47e1143ae3d",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "388ddd81-e1ac-44aa-995d-a47e1143ae3d"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 00:37:20 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"createdAt\": \"2026-01-29T00:35:54.119151Z\",\n    \"id\": \"388ddd81-e1ac-44aa-995d-a47e1143ae3d\",\n    \"location\": \"yelhanka new town\",\n    \"name\": \"resto - yelhanka new town\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "delete branch",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/d0b12308-083e-45cc-b101-5de200a5220c",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "d0b12308-083e-45cc-b101-5de200a5220c"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - delete branch",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0NTU2NiwiZXhwIjoxNzY5NjQ3MzY2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.zi9Jj94RKOsccMJvne1LMxdRkn7U49aWC_6SvBSYpSU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/d0b12308-083e-45cc-b101-5de200a5220c",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "d0b12308-083e-45cc-b101-5de200a5220c"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 00:39:18 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Menu",
+          "item": [
+            {
+              "name": "create menu",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \n  \"menuType\": \"BREAKFAST\",\n  \"validFrom\": \"06:00\",\n  \"validTo\": \"11:00\"\n\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "menus"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res -create menu",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Idempotency-Key",
+                        "value": "5be404b1-389e-4eb2-b944-fc7d3423e397",
+                        "type": "text"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY0OTYzMCwiZXhwIjoxNzY5NjUxNDMwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.1T1WvKjhQgt7nRG0ps5OCij6PQsqpCHc87t8PlHnv3c",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \n  \"menuType\": \"BREAKFAST\",\n  \"validFrom\": \"07:00\",\n  \"validTo\": \"11:30\"\n\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/388ddd81-e1ac-44aa-995d-a47e1143ae3d/menus",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "388ddd81-e1ac-44aa-995d-a47e1143ae3d",
+                        "menus"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 01:28:08 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"active\": true,\n    \"branchId\": \"388ddd81-e1ac-44aa-995d-a47e1143ae3d\",\n    \"createdAt\": \"2026-01-29T01:28:08.334451Z\",\n    \"id\": \"35e3c06a-4a7b-431c-9c44-761bbd0bd44a\",\n    \"menuType\": \"BREAKFAST\",\n    \"validFrom\": \"07:00:00\",\n    \"validTo\": \"11:30:00\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get menu by type",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus/BREAKFAST",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "menus",
+                    "BREAKFAST"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get menu by type",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1MDQ4OSwiZXhwIjoxNzY5NjUyMjg5LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.w7Ri9-C1xNE0dma74tuHotVsw3Uwby_8aIp-ASeFLAA",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/787a21c8-c92e-4849-8a8a-15bf55f4cb8c/menus/BREAKFAST",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "787a21c8-c92e-4849-8a8a-15bf55f4cb8c",
+                        "menus",
+                        "BREAKFAST"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 01:36:57 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"active\": true,\n    \"branchId\": \"787a21c8-c92e-4849-8a8a-15bf55f4cb8c\",\n    \"createdAt\": \"2026-01-29T01:36:53.695582Z\",\n    \"id\": \"52dbd577-ace2-4b35-9ba2-99c144e1d31e\",\n    \"menuType\": \"BREAKFAST\",\n    \"validFrom\": \"07:00:00\",\n    \"validTo\": \"11:30:00\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get menus by branch",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "menus"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get menus by branch",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1MDQ4OSwiZXhwIjoxNzY5NjUyMjg5LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.w7Ri9-C1xNE0dma74tuHotVsw3Uwby_8aIp-ASeFLAA",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/787a21c8-c92e-4849-8a8a-15bf55f4cb8c/menus",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "787a21c8-c92e-4849-8a8a-15bf55f4cb8c",
+                        "menus"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 01:41:04 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n    {\n        \"active\": true,\n        \"branchId\": \"787a21c8-c92e-4849-8a8a-15bf55f4cb8c\",\n        \"createdAt\": \"2026-01-29T01:36:53.695582Z\",\n        \"id\": \"52dbd577-ace2-4b35-9ba2-99c144e1d31e\",\n        \"menuType\": \"BREAKFAST\",\n        \"validFrom\": \"07:00:00\",\n        \"validTo\": \"11:30:00\"\n    },\n    {\n        \"active\": true,\n        \"branchId\": \"787a21c8-c92e-4849-8a8a-15bf55f4cb8c\",\n        \"createdAt\": \"2026-01-29T01:40:47.218335Z\",\n        \"id\": \"94702393-2e09-4aed-8934-8f5aec32bd80\",\n        \"menuType\": \"LUNCH\",\n        \"validFrom\": \"13:00:00\",\n        \"validTo\": \"15:30:00\"\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "update menu status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1MTE4NiwiZXhwIjoxNzY5NjUyOTg2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.GapA4lAZ27D7BdA0vn959IzQ02f7w8rSFGWeUWX1720",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"active\" : true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/menus/52dbd577-ace2-4b35-9ba2-99c144e1d31e/status",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menus",
+                    "52dbd577-ace2-4b35-9ba2-99c144e1d31e",
+                    "status"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - update menu status",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1MTE4NiwiZXhwIjoxNzY5NjUyOTg2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.GapA4lAZ27D7BdA0vn959IzQ02f7w8rSFGWeUWX1720",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"active\" : false\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/menus/52dbd577-ace2-4b35-9ba2-99c144e1d31e/status",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menus",
+                        "52dbd577-ace2-4b35-9ba2-99c144e1d31e",
+                        "status"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 01:49:43 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"active\": false,\n    \"branchId\": \"787a21c8-c92e-4849-8a8a-15bf55f4cb8c\",\n    \"createdAt\": \"2026-01-29T01:36:53.695582Z\",\n    \"id\": \"52dbd577-ace2-4b35-9ba2-99c144e1d31e\",\n    \"menuType\": \"BREAKFAST\",\n    \"validFrom\": \"07:00:00\",\n    \"validTo\": \"11:30:00\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Menu Item",
+          "item": [
+            {
+              "name": "create menu item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY3MTUxMCwiZXhwIjoxNzY5NjczMzEwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19._fq_rPalEGrZhPzLFoKTul3wBOv8RdznMf6yio3RLuA",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Idly Samabr\",\n  \"description\": \"Soft and fluffy idly with sambar\",\n  \"price\": 100.00,\n  \"preparationTime\": 3,\n  \"category\": \"Main Course\",\n  \"foodType\": \"VEGETARIAN\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/menu-items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menu-items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - create menu item",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Idly Samabr\",\n  \"description\": \"Soft and fluffy idly with sambar\",\n  \"price\": 100.00,\n  \"preparationTime\": 3,\n  \"category\": \"Main Course\",\n  \"foodType\": \"VEGETARIAN\"\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/menu-items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menu-items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:25:25 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"available\": true,\n    \"category\": \"Main Course\",\n    \"createdAt\": \"2026-01-29T02:25:25.494187Z\",\n    \"description\": \"Soft and fluffy idly with sambar\",\n    \"foodType\": \"VEGETARIAN\",\n    \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n    \"name\": \"Idly Samabr\",\n    \"preparationTime\": 3,\n    \"price\": 100\n}"
+                }
+              ]
+            },
+            {
+              "name": "get menu item",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/menu-items/afa5204c-34a7-4281-954c-2188051e329a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menu-items",
+                    "afa5204c-34a7-4281-954c-2188051e329a"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get menu item",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/menu-items/afa5204c-34a7-4281-954c-2188051e329a",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menu-items",
+                        "afa5204c-34a7-4281-954c-2188051e329a"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:27:13 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"available\": true,\n    \"category\": \"Main Course\",\n    \"createdAt\": \"2026-01-29T02:25:25.494187Z\",\n    \"description\": \"Soft and fluffy idly with sambar\",\n    \"foodType\": \"VEGETARIAN\",\n    \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n    \"name\": \"Idly Samabr\",\n    \"preparationTime\": 3,\n    \"price\": 100\n}"
+                }
+              ]
+            },
+            {
+              "name": "list menu items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDE4MiwiZXhwIjoxNzY5NjYxOTgyLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.eB4U_a-8WXt__iKUm86TP0kAl5yViIvrAWxK5VnNpqE",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/menu-items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menu-items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - list menu items",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/menu-items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menu-items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:27:59 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n    {\n        \"available\": true,\n        \"category\": \"Main Course\",\n        \"createdAt\": \"2026-01-29T02:24:19.211950Z\",\n        \"description\": \"Rich and creamy tomato-based curry with soft paneer cubes\",\n        \"foodType\": \"VEGETARIAN\",\n        \"id\": \"5ed51dd0-bc50-4769-a51f-b7137cab06b7\",\n        \"name\": \"Paneer Butter Masala\",\n        \"preparationTime\": 15,\n        \"price\": 249.5\n    },\n    {\n        \"available\": true,\n        \"category\": \"Main Course\",\n        \"createdAt\": \"2026-01-29T02:25:25.494187Z\",\n        \"description\": \"Soft and fluffy idly with sambar\",\n        \"foodType\": \"VEGETARIAN\",\n        \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n        \"name\": \"Idly Samabr\",\n        \"preparationTime\": 3,\n        \"price\": 100\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "update menu item",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Paneer Butter Masala NEW\",\n  \"description\": \"Extra creamy tomato gravy with butter and fresh paneer cubes\",\n  \"price\": 269.00,\n  \"preparationTime\": 18,\n  \"category\": \"Main Course\",\n  \"foodType\": \"VEGETARIAN\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/menu-items/5ed51dd0-bc50-4769-a51f-b7137cab06b7",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menu-items",
+                    "5ed51dd0-bc50-4769-a51f-b7137cab06b7"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - create menu item",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Idly Samabr\",\n  \"description\": \"Soft and fluffy idly with sambar\",\n  \"price\": 100.00,\n  \"preparationTime\": 3,\n  \"category\": \"Main Course\",\n  \"foodType\": \"VEGETARIAN\"\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/menu-items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menu-items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:25:25 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"available\": true,\n    \"category\": \"Main Course\",\n    \"createdAt\": \"2026-01-29T02:25:25.494187Z\",\n    \"description\": \"Soft and fluffy idly with sambar\",\n    \"foodType\": \"VEGETARIAN\",\n    \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n    \"name\": \"Idly Samabr\",\n    \"preparationTime\": 3,\n    \"price\": 100\n}"
+                }
+              ]
+            },
+            {
+              "name": "update menu item availability",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1ODc1MywiZXhwIjoxNzY5NjYwNTUzLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.o3LZe0MtOKBJzcgnXnb0TcocAxtv5tMNQ6RIahdBC2E",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n   \"available\":true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/menu-items/afa5204c-34a7-4281-954c-2188051e329a/availability",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menu-items",
+                    "afa5204c-34a7-4281-954c-2188051e329a",
+                    "availability"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res  - update menu item availability",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Mjg1MSwiZXhwIjoxNzY5NjU0NjUxLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.g3DINrrCuzCdExyEw_0Y-Rccw_uQ6e-8gV-dwCAmwvY",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"available\":false\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/menu-items/afa5204c-34a7-4281-954c-2188051e329a/availability",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menu-items",
+                        "afa5204c-34a7-4281-954c-2188051e329a",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:32:00 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"available\": false,\n    \"category\": \"Main Course\",\n    \"createdAt\": \"2026-01-29T02:25:25.494187Z\",\n    \"description\": \"Soft and fluffy idly with sambar\",\n    \"foodType\": \"VEGETARIAN\",\n    \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n    \"name\": \"Idly Samabr\",\n    \"preparationTime\": 3,\n    \"price\": 100\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Menu Item Mapping",
+          "item": [
+            {
+              "name": "add item to menu",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzgxNiwiZXhwIjoxNzY5NjU5NjE2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.bu4eY_RBTy0u_YFvtVNAv250nNNEnJvOmUM6T1CR0Sg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"itemId\" : \"afa5204c-34a7-4281-954c-2188051e329a\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menus",
+                    "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                    "items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - add item to menu",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"itemId\" : \"afa5204c-34a7-4281-954c-2188051e329a\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menus",
+                        "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                        "items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:46:01 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "get items in menu",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzgxNiwiZXhwIjoxNzY5NjU5NjE2LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.bu4eY_RBTy0u_YFvtVNAv250nNNEnJvOmUM6T1CR0Sg",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menus",
+                    "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                    "items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get items in menu",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menus",
+                        "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                        "items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:48:22 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "[\n    {\n        \"available\": false,\n        \"foodType\": \"VEGETARIAN\",\n        \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n        \"name\": \"Idly Samabr\",\n        \"price\": 100\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "delete item from menu",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items/afa5204c-34a7-4281-954c-2188051e329a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "menus",
+                    "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                    "items",
+                    "afa5204c-34a7-4281-954c-2188051e329a"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - delete item from menu",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/menus/88e2e609-6932-419f-929c-0ff108ea2aa6/items/afa5204c-34a7-4281-954c-2188051e329a",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "menus",
+                        "88e2e609-6932-419f-929c-0ff108ea2aa6",
+                        "items",
+                        "afa5204c-34a7-4281-954c-2188051e329a"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:49:01 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Combo",
+          "item": [
+            {
+              "name": "add combo",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2OTY2NywiZXhwIjoxNzY5NjcxNDY3LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.fm7fdkfHBSr1INnPqAgoqzXfkFWqUdCJwxMvTsx_vRE",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Lunch Combo\",\n  \"description\": \"Perfect combo for a lunch meal\",\n  \"comboPrice\": 150.00\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/combos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - add combo",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Breakfast Combo\",\n  \"description\": \"Perfect combo for a monrning meal\",\n  \"comboPrice\": 150.00\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 02:59:41 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"active\": false,\n    \"comboPrice\": 150,\n    \"createdAt\": \"2026-01-29T02:59:41.759118Z\",\n    \"description\": \"Perfect combo for a monrning meal\",\n    \"id\": \"5242d960-7980-4174-a830-0e43fa8d779d\",\n    \"itemIds\": [],\n    \"name\": \"Breakfast Combo\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get combo",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2OTY2NywiZXhwIjoxNzY5NjcxNDY3LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.fm7fdkfHBSr1INnPqAgoqzXfkFWqUdCJwxMvTsx_vRE",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos",
+                    "5242d960-7980-4174-a830-0e43fa8d779d"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get combo",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos",
+                        "5242d960-7980-4174-a830-0e43fa8d779d"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:01:28 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"active\": false,\n    \"comboPrice\": 150,\n    \"createdAt\": \"2026-01-29T02:59:41.759118Z\",\n    \"description\": \"Perfect combo for a monrning meal\",\n    \"id\": \"5242d960-7980-4174-a830-0e43fa8d779d\",\n    \"itemIds\": [],\n    \"name\": \"Breakfast Combo\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "list combos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2OTY2NywiZXhwIjoxNzY5NjcxNDY3LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.fm7fdkfHBSr1INnPqAgoqzXfkFWqUdCJwxMvTsx_vRE",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/combos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res- list combos",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:00:31 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "[\n    {\n        \"active\": false,\n        \"comboPrice\": 150,\n        \"createdAt\": \"2026-01-29T02:59:41.759118Z\",\n        \"description\": \"Perfect combo for a monrning meal\",\n        \"id\": \"5242d960-7980-4174-a830-0e43fa8d779d\",\n        \"itemIds\": [],\n        \"name\": \"Breakfast Combo\"\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "update combo",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Breakfast Combo NEW\",\n  \"description\": \"Perfect combo for a monrning meal\",\n  \"comboPrice\": 150.00\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos",
+                    "5242d960-7980-4174-a830-0e43fa8d779d"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - update combo",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Breakfast Combo NEW\",\n  \"description\": \"Perfect combo for a monrning meal\",\n  \"comboPrice\": 150.00\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos",
+                        "5242d960-7980-4174-a830-0e43fa8d779d"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:09:08 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"active\": false,\n    \"comboPrice\": 150,\n    \"createdAt\": \"2026-01-29T02:59:41.759118Z\",\n    \"description\": \"Perfect combo for a monrning meal\",\n    \"id\": \"5242d960-7980-4174-a830-0e43fa8d779d\",\n    \"itemIds\": [],\n    \"name\": \"Breakfast Combo NEW\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "update combo status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2OTY2NywiZXhwIjoxNzY5NjcxNDY3LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.fm7fdkfHBSr1INnPqAgoqzXfkFWqUdCJwxMvTsx_vRE",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\" : true\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/status",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos",
+                    "5242d960-7980-4174-a830-0e43fa8d779d",
+                    "status"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "update combo status",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NDY3MCwiZXhwIjoxNzY5NjU2NDcwLCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.FA3OV2mWjy884e7YKBSO7_uI8t5aradTqJ8MqDd3UXQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"active\" : false\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/status",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos",
+                        "5242d960-7980-4174-a830-0e43fa8d779d",
+                        "status"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:11:40 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"active\": false,\n    \"comboPrice\": 150,\n    \"createdAt\": \"2026-01-29T02:59:41.759118Z\",\n    \"description\": \"Perfect combo for a monrning meal\",\n    \"id\": \"5242d960-7980-4174-a830-0e43fa8d779d\",\n    \"itemIds\": [],\n    \"name\": \"Breakfast Combo NEW\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "add items to combo",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Njk4OCwiZXhwIjoxNzY5NjU4Nzg4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.c7wXrIJmzUvjoAC9-kN_jCMPXiiJynqIqN8Dg_RdOrU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/items?itemId=afa5204c-34a7-4281-954c-2188051e329a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos",
+                    "5242d960-7980-4174-a830-0e43fa8d779d",
+                    "items"
+                  ],
+                  "query": [
+                    {
+                      "key": "itemId",
+                      "value": "afa5204c-34a7-4281-954c-2188051e329a"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - add items to combo",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Njk4OCwiZXhwIjoxNzY5NjU4Nzg4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.c7wXrIJmzUvjoAC9-kN_jCMPXiiJynqIqN8Dg_RdOrU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/items?itemId=afa5204c-34a7-4281-954c-2188051e329a",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos",
+                        "5242d960-7980-4174-a830-0e43fa8d779d",
+                        "items"
+                      ],
+                      "query": [
+                        {
+                          "key": "itemId",
+                          "value": "afa5204c-34a7-4281-954c-2188051e329a"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:23:33 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "delete items from combo",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Njk4OCwiZXhwIjoxNzY5NjU4Nzg4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.c7wXrIJmzUvjoAC9-kN_jCMPXiiJynqIqN8Dg_RdOrU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/items/afa5204c-34a7-4281-954c-2188051e329a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "combos",
+                    "5242d960-7980-4174-a830-0e43fa8d779d",
+                    "items",
+                    "afa5204c-34a7-4281-954c-2188051e329a"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "add items to combo",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1Njk4OCwiZXhwIjoxNzY5NjU4Nzg4LCJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl19.c7wXrIJmzUvjoAC9-kN_jCMPXiiJynqIqN8Dg_RdOrU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/combos/5242d960-7980-4174-a830-0e43fa8d779d/items?itemId=afa5204c-34a7-4281-954c-2188051e329a",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "combos",
+                        "5242d960-7980-4174-a830-0e43fa8d779d",
+                        "items"
+                      ],
+                      "query": [
+                        {
+                          "key": "itemId",
+                          "value": "afa5204c-34a7-4281-954c-2188051e329a"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:23:33 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Customer Menu",
+          "item": [
+            {
+              "name": "branch current active menu",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzcyMCwiZXhwIjoxNzY5NjU5NTIwLCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qdiio7710mHQJGp6Qu3JZlQwSTBDKDowYSlLuGCi500",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus/active",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "menus",
+                    "active"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "exampe res  - branch current active menu",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzcyMCwiZXhwIjoxNzY5NjU5NTIwLCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qdiio7710mHQJGp6Qu3JZlQwSTBDKDowYSlLuGCi500",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus/active",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "88e00a02-b5d3-4569-a336-6a452603048e",
+                        "menus",
+                        "active"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:53:25 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"items\": [\n        {\n            \"available\": true,\n            \"category\": \"Main Course\",\n            \"createdAt\": null,\n            \"description\": \"Soft and fluffy idly with sambar\",\n            \"foodType\": \"VEGETARIAN\",\n            \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n            \"name\": \"Idly Samabr\",\n            \"preparationTime\": null,\n            \"price\": 100\n        }\n    ],\n    \"menuId\": \"88e2e609-6932-419f-929c-0ff108ea2aa6\",\n    \"menuType\": \"BREAKFAST\",\n    \"validFrom\": \"06:00:00\",\n    \"validTo\": \"11:00:00\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "branch menu items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzcyMCwiZXhwIjoxNzY5NjU5NTIwLCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qdiio7710mHQJGp6Qu3JZlQwSTBDKDowYSlLuGCi500",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus/BREAKFAST/items",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "menus",
+                    "BREAKFAST",
+                    "items"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - branch menu items",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzcyMCwiZXhwIjoxNzY5NjU5NTIwLCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qdiio7710mHQJGp6Qu3JZlQwSTBDKDowYSlLuGCi500",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/menus/BREAKFAST/items",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "branches",
+                        "88e00a02-b5d3-4569-a336-6a452603048e",
+                        "menus",
+                        "BREAKFAST",
+                        "items"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 03:53:43 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"items\": [\n        {\n            \"available\": true,\n            \"category\": \"Main Course\",\n            \"createdAt\": null,\n            \"description\": \"Soft and fluffy idly with sambar\",\n            \"foodType\": \"VEGETARIAN\",\n            \"id\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n            \"name\": \"Idly Samabr\",\n            \"preparationTime\": null,\n            \"price\": 100\n        }\n    ],\n    \"menuId\": \"88e2e609-6932-419f-929c-0ff108ea2aa6\",\n    \"menuType\": \"BREAKFAST\",\n    \"validFrom\": \"06:00:00\",\n    \"validTo\": \"11:00:00\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "branch combos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY1NzcyMCwiZXhwIjoxNzY5NjU5NTIwLCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qdiio7710mHQJGp6Qu3JZlQwSTBDKDowYSlLuGCi500",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/branches/88e00a02-b5d3-4569-a336-6a452603048e/combos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "branches",
+                    "88e00a02-b5d3-4569-a336-6a452603048e",
+                    "combos"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Order",
+          "item": [
+            {
+              "name": "order price preview",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDI5OSwiZXhwIjoxNzY5NjYyMDk5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.rR5VgfHydMNNkoruq_TsVO1BrpAY7FYjlhMbs-J5acI",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchId\": \"88e00a02-b5d3-4569-a336-6a452603048e\",\n  \"customerName\": \"Rahul Sharma\",\n  \"customerPhone\": \"+91-9876543210\",\n  \"items\": [\n    {\n      \"itemId\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n      \"itemType\": \"ITEM\",\n      \"quantity\": 2,\n      \"specialNotes\": \"Less spicy\"\n    }\n  ]\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/price-preview",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "price-preview"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - order price preview",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDI5OSwiZXhwIjoxNzY5NjYyMDk5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.rR5VgfHydMNNkoruq_TsVO1BrpAY7FYjlhMbs-J5acI",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branchId\": \"88e00a02-b5d3-4569-a336-6a452603048e\",\n  \"customerName\": \"Rahul Sharma\",\n  \"customerPhone\": \"+91-9876543210\",\n  \"items\": [\n    {\n      \"itemId\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n      \"itemType\": \"ITEM\",\n      \"quantity\": 2,\n      \"specialNotes\": \"Less spicy\"\n    }\n  ]\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/price-preview",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "price-preview"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 04:18:35 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"breakdown\": {\n        \"deliveryCharge\": 0,\n        \"grandTotal\": 236,\n        \"itemsTotal\": 200,\n        \"tax\": 36\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "create order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY3MTY1OSwiZXhwIjoxNzY5NjczNDU5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.Qukad2mGmRopwqZCHBxYCTcAKYcLl2Fo_64SQpjj3sw",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchId\": \"1b44f392-b0a7-41b8-920f-37d1e2d6a959\",\n  \"customerName\": \"Rahul Sharma\",\n  \"customerPhone\": \"+91-9876543210\",\n  \"items\": [\n    {\n      \"itemId\": \"3a23472d-2f1e-47dc-accc-305223afabb9\",\n      \"itemType\": \"ITEM\",\n      \"quantity\": 1,\n      \"specialNotes\": \"Less spicy\"\n    }\n  ]\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - create order",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDI5OSwiZXhwIjoxNzY5NjYyMDk5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.rR5VgfHydMNNkoruq_TsVO1BrpAY7FYjlhMbs-J5acI",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"branchId\": \"88e00a02-b5d3-4569-a336-6a452603048e\",\n  \"customerName\": \"Rahul Sharma\",\n  \"customerPhone\": \"+91-9876543210\",\n  \"items\": [\n    {\n      \"itemId\": \"afa5204c-34a7-4281-954c-2188051e329a\",\n      \"itemType\": \"ITEM\",\n      \"quantity\": 2,\n      \"specialNotes\": \"Less spicy\"\n    }\n  ]\n}\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "",
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 04:19:16 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [
+                    {
+                      "expires": "Invalid Date",
+                      "domain": "",
+                      "path": ""
+                    }
+                  ],
+                  "body": "{\n    \"breakdown\": {\n        \"deliveryCharge\": 0,\n        \"grandTotal\": 236,\n        \"itemsTotal\": 200,\n        \"tax\": 36\n    },\n    \"createdAt\": \"2026-01-29T04:19:16.231234Z\",\n    \"orderId\": \"44e36435-8698-41a1-8ced-d5c36190d4d2\",\n    \"status\": \"CREATED\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "get order",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDI5OSwiZXhwIjoxNzY5NjYyMDk5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.rR5VgfHydMNNkoruq_TsVO1BrpAY7FYjlhMbs-J5acI",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "44e36435-8698-41a1-8ced-d5c36190d4d2"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - get order",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MDI5OSwiZXhwIjoxNzY5NjYyMDk5LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.rR5VgfHydMNNkoruq_TsVO1BrpAY7FYjlhMbs-J5acI",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "44e36435-8698-41a1-8ced-d5c36190d4d2"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 04:20:21 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"breakdown\": {\n        \"deliveryCharge\": null,\n        \"grandTotal\": 236,\n        \"itemsTotal\": null,\n        \"tax\": null\n    },\n    \"createdAt\": \"2026-01-29T04:19:16.231234Z\",\n    \"orderId\": \"44e36435-8698-41a1-8ced-d5c36190d4d2\",\n    \"status\": \"CREATED\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "accept order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY3MDczNSwiZXhwIjoxNzY5NjcyNTM1LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19._qoaeQsd3pkHTeaC4LSnvhHwRLuFskgXczaF4NLrYuw",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/56e3fd55-fdb6-4742-983c-03b925c84b73/accept",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "56e3fd55-fdb6-4742-983c-03b925c84b73",
+                    "accept"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "preparing order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY3MDczNSwiZXhwIjoxNzY5NjcyNTM1LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19._qoaeQsd3pkHTeaC4LSnvhHwRLuFskgXczaF4NLrYuw",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/56e3fd55-fdb6-4742-983c-03b925c84b73/preparing",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "56e3fd55-fdb6-4742-983c-03b925c84b73",
+                    "preparing"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ready order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MzcwMywiZXhwIjoxNzY5NjY1NTAzLCJzdWIiOiJzdGFmZiIsInJvbGVzIjpbIlNUQUZGIl19.EiDnf30yDvCLNIfsl7HV0z0bCN5z1T8Dgx3Gx087RCU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2/ready",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "44e36435-8698-41a1-8ced-d5c36190d4d2",
+                    "ready"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delivered order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MzcwMywiZXhwIjoxNzY5NjY1NTAzLCJzdWIiOiJzdGFmZiIsInJvbGVzIjpbIlNUQUZGIl19.EiDnf30yDvCLNIfsl7HV0z0bCN5z1T8Dgx3Gx087RCU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2/delivered",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "44e36435-8698-41a1-8ced-d5c36190d4d2",
+                    "delivered"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "cancel order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MzcwMywiZXhwIjoxNzY5NjY1NTAzLCJzdWIiOiJzdGFmZiIsInJvbGVzIjpbIlNUQUZGIl19.EiDnf30yDvCLNIfsl7HV0z0bCN5z1T8Dgx3Gx087RCU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2/cancel",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "44e36435-8698-41a1-8ced-d5c36190d4d2",
+                    "cancel"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "status-history",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MzcwMywiZXhwIjoxNzY5NjY1NTAzLCJzdWIiOiJzdGFmZiIsInJvbGVzIjpbIlNUQUZGIl19.EiDnf30yDvCLNIfsl7HV0z0bCN5z1T8Dgx3Gx087RCU",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2/status-history",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "44e36435-8698-41a1-8ced-d5c36190d4d2",
+                    "status-history"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - status-history",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2MzcwMywiZXhwIjoxNzY5NjY1NTAzLCJzdWIiOiJzdGFmZiIsInJvbGVzIjpbIlNUQUZGIl19.EiDnf30yDvCLNIfsl7HV0z0bCN5z1T8Dgx3Gx087RCU",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/44e36435-8698-41a1-8ced-d5c36190d4d2/status-history",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "44e36435-8698-41a1-8ced-d5c36190d4d2",
+                        "status-history"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 05:18:03 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n    {\n        \"oldStatus\": \"CREATED\",\n        \"newStatus\": \"ACCEPTED\",\n        \"changedAt\": \"2026-01-29T05:15:36.447972Z\"\n    },\n    {\n        \"oldStatus\": \"ACCEPTED\",\n        \"newStatus\": \"PREPARING\",\n        \"changedAt\": \"2026-01-29T05:16:11.247264Z\"\n    },\n    {\n        \"oldStatus\": \"PREPARING\",\n        \"newStatus\": \"READY\",\n        \"changedAt\": \"2026-01-29T05:16:43.380518Z\"\n    },\n    {\n        \"oldStatus\": \"READY\",\n        \"newStatus\": \"DELIVERED\",\n        \"changedAt\": \"2026-01-29T05:17:22.137284Z\"\n    }\n]"
+                }
+              ]
+            },
+            {
+              "name": "payments",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"method\" : \"CASH\",\n    \"currency\":\"INR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                    "payments"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "payments callback",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"paymentId\" :\"7ab8378e-e559-4f98-bb1f-2e5f11691ec4\",\n    \"currency\":\"SUCCESS\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments/callback",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                    "payments",
+                    "callback"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - payments callback",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"paymentId\" :\"7ab8378e-e559-4f98-bb1f-2e5f11691ec4\",\n    \"currency\":\"SUCCESS\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments/callback",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                        "payments",
+                        "callback"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 06:32:43 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            },
+            {
+              "name": "retry payment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments/retry",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                    "payments",
+                    "retry"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - retry payment",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"paymentId\" :\"7ab8378e-e559-4f98-bb1f-2e5f11691ec4\",\n    \"currency\":\"SUCCESS\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments/callback",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                        "payments",
+                        "callback"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 06:32:43 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            },
+            {
+              "name": "refund",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"amount\":354.00,\n    \"reason\":\"order cancelled\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/refunds",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "orders",
+                    "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                    "refunds"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "example res - retry payment",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXN0byIsImlhdCI6MTc2OTY2NzE5OCwiZXhwIjoxNzY5NjY4OTk4LCJzdWIiOiJjdXN0b21lciIsInJvbGVzIjpbIkNVU1RPTUVSIl19.fwJQ9jigYJksxD18EK41NDLPG6WYVvSU7N5DMIvMRhQ",
+                        "type": "text"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"paymentId\" :\"7ab8378e-e559-4f98-bb1f-2e5f11691ec4\",\n    \"currency\":\"SUCCESS\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:8080/api/orders/bcffdf78-7ffe-46f4-b7f6-542deaa21a27/payments/callback",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "8080",
+                      "path": [
+                        "api",
+                        "orders",
+                        "bcffdf78-7ffe-46f4-b7f6-542deaa21a27",
+                        "payments",
+                        "callback"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Thu, 29 Jan 2026 06:32:43 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
