@@ -18,4 +18,12 @@ public interface MenuRepository extends JpaRepository<Menu, UUID> {
     );
 
     List<Menu> findAllByBranch_Id(UUID branchId);
+
+    List<Menu> findByBranchIdAndActiveTrue(UUID branchId);
+
+    Optional<Menu> findByBranchIdAndMenuTypeAndActiveTrue(
+            UUID branchId,
+            MenuType menuType
+    );
+
 }
