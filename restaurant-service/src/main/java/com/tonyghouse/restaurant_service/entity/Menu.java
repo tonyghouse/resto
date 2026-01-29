@@ -27,7 +27,6 @@ public class Menu extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "menu_type", nullable = false)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private MenuType menuType;
 
     @Column(name = "valid_from")

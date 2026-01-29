@@ -26,7 +26,6 @@ public class OrderStatusHistory extends BaseEntity {
     private Order order;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private OrderStatus oldStatus;
 
     @Enumerated(EnumType.STRING)

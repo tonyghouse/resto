@@ -34,7 +34,6 @@ public class Order extends BaseEntity {
     private String customerPhone;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private OrderStatus status;
 
     private BigDecimal totalAmount;
