@@ -1,9 +1,13 @@
 package com.tonyghouse.restaurant_service.controller;
 
 import com.tonyghouse.restaurant_service.dto.CreateOrderRequest;
+import com.tonyghouse.restaurant_service.dto.InitiatePaymentRequest;
 import com.tonyghouse.restaurant_service.dto.OrderResponse;
 import com.tonyghouse.restaurant_service.dto.OrderStatusHistoryResponse;
+import com.tonyghouse.restaurant_service.dto.PaymentCallbackRequest;
 import com.tonyghouse.restaurant_service.dto.PricePreviewResponse;
+import com.tonyghouse.restaurant_service.dto.RefundRequestDto;
+import com.tonyghouse.restaurant_service.service.OrderPaymentService;
 import com.tonyghouse.restaurant_service.service.OrderService;
 import com.tonyghouse.restaurant_service.service.OrderStateService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderStateService orderStateService;
+    private final OrderPaymentService orderPaymentService;
 
     @PostMapping("/price-preview")
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin
@@ -80,5 +85,35 @@ public class OrderController {
     public List<OrderStatusHistoryResponse> history(
             @PathVariable UUID orderId) {
         return orderStateService.history(orderId);
+    }
+
+    @PostMapping("/{orderId}/payments")
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
+    public void initiate(
+            @PathVariable UUID orderId,
+            @RequestBody InitiatePaymentRequest request) {
+        orderPaymentService.initiatePayment(orderId, request);
+    }
+
+    @PostMapping("/{orderId}/payments/callback")
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
+    public void callback(
+            @PathVariable UUID orderId,
+            @RequestBody PaymentCallbackRequest request) {
+        orderPaymentService.handleCallback(orderId, request);
+    }
+
+    @PostMapping("/{orderId}/payments/retry")
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
+    public void retry(@PathVariable UUID orderId) {
+        orderPaymentService.retryPayment(orderId);
+    }
+
+    @PostMapping("/{orderId}/refunds")
+    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
+    public void refund(
+            @PathVariable UUID orderId,
+            @RequestBody RefundRequestDto request) {
+        orderPaymentService.refund(orderId, request);
     }
 }
