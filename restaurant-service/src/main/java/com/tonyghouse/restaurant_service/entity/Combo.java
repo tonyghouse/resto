@@ -1,5 +1,6 @@
 package com.tonyghouse.restaurant_service.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,4 +32,7 @@ public class Combo extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name = "menu_item_id")
     )
     private Set<MenuItem> items = new HashSet<>();
+
+    @Column(name = "created_at")
+    private Instant createdAt;
 }

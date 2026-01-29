@@ -16,7 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/menu-items")
 @RequiredArgsConstructor
-public class MenuItemAdminController {
+public class MenuItemController {
 
     private final MenuItemService service;
 
