@@ -6,6 +6,7 @@ import com.tonyghouse.restaurant_service.dto.InitiatePaymentRequest;
 import com.tonyghouse.restaurant_service.dto.PaymentCallbackRequest;
 import com.tonyghouse.restaurant_service.dto.PriceBreakdown;
 import com.tonyghouse.restaurant_service.dto.RefundRequestDto;
+import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentResponse;
 import com.tonyghouse.restaurant_service.dto.payment.PaymentResponse;
 import com.tonyghouse.restaurant_service.entity.Order;
 import com.tonyghouse.restaurant_service.proxy.PaymentClientProxy;
@@ -54,7 +55,7 @@ class OrderPaymentServiceImplTest {
         breakdown.setGrandTotal(BigDecimal.valueOf(100));
         breakdown.setTax(BigDecimal.valueOf(10));
 
-        PaymentResponse response = new PaymentResponse();
+        CreatePaymentResponse response = new CreatePaymentResponse();
         response.setPaymentId(paymentId);
 
         InitiatePaymentRequest req = new InitiatePaymentRequest();

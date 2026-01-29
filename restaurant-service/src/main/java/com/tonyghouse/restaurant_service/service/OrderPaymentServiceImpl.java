@@ -1,5 +1,6 @@
 package com.tonyghouse.restaurant_service.service;
 
+import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentResponse;
 import com.tonyghouse.restaurant_service.proxy.PaymentClientProxy;
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
 import com.tonyghouse.restaurant_service.constants.payment.PaymentStatus;
@@ -62,7 +63,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         String idempotencyKey =
                 "order-" + orderId;
 
-        PaymentResponse response =
+        CreatePaymentResponse response =
                 paymentClientProxy.createPayment(idempotencyKey, request);
 
         order.setPaymentId(response.getPaymentId());
