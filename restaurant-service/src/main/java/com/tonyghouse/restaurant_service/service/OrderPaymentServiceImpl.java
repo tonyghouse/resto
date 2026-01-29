@@ -1,6 +1,6 @@
 package com.tonyghouse.restaurant_service.service;
 
-import com.tonyghouse.restaurant_service.proxy.PaymentClient;
+import com.tonyghouse.restaurant_service.proxy.PaymentClientProxy;
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
 import com.tonyghouse.restaurant_service.constants.payment.PaymentStatus;
 import com.tonyghouse.restaurant_service.dto.InitiatePaymentRequest;
@@ -23,15 +23,15 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 
     private final OrderRepository orderRepository;
     private final OrderPricingService pricingService;
-    private final PaymentClient paymentClient;
+    private final PaymentClientProxy paymentClientProxy;
 
     public OrderPaymentServiceImpl(
             OrderRepository orderRepository,
             OrderPricingService pricingService,
-            PaymentClient paymentClient) {
+            PaymentClientProxy paymentClientProxy) {
         this.orderRepository = orderRepository;
         this.pricingService = pricingService;
-        this.paymentClient = paymentClient;
+        this.paymentClientProxy = paymentClientProxy;
     }
 
     @Override
@@ -63,13 +63,13 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
                 "order-" + orderId;
 
         PaymentResponse response =
-                paymentClient.createPayment(idempotencyKey, request);
+                paymentClientProxy.createPayment(idempotencyKey, request);
 
         order.setPaymentId(response.getPaymentId());
         orderRepository.save(order);
 
         // async or sync – your call
-        paymentClient.processPayment(response.getPaymentId());
+        paymentClientProxy.processPayment(response.getPaymentId());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
             throw new IllegalStateException("No payment to retry");
         }
 
-        paymentClient.processPayment(order.getPaymentId());
+        paymentClientProxy.processPayment(order.getPaymentId());
     }
 
     @Override
@@ -120,6 +120,6 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
         refund.setAmount(req.getAmount());
         refund.setReason(req.getReason());
 
-        paymentClient.refund(order.getPaymentId(), refund);
+        paymentClientProxy.refund(order.getPaymentId(), refund);
     }
 }

@@ -1,5 +1,6 @@
 package com.tonyghouse.restaurant_service.proxy;
 
+import com.tonyghouse.restaurant_service.dto.auth.TokenRequest;
 import com.tonyghouse.restaurant_service.dto.auth.TokenResponse;
 import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentRequest;
 import com.tonyghouse.restaurant_service.dto.payment.PaymentResponse;
@@ -14,10 +15,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class PaymentClient {
+public class PaymentClientProxy {
 
     private final RestTemplate restTemplate;
 
@@ -33,7 +35,7 @@ public class PaymentClient {
     @Value("${restaurant_service.client_secret}")
     private String restaurantServiceClientSecret;
 
-    public PaymentClient(RestTemplate restTemplate) {
+    public PaymentClientProxy(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -50,7 +52,7 @@ public class PaymentClient {
                 new HttpEntity<>(request, headers);
 
         return restTemplate.postForObject(
-                paymentServiceUrl,
+                paymentServiceUrl + "/api/payments",
                 entity,
                 PaymentResponse.class
         );
@@ -58,7 +60,7 @@ public class PaymentClient {
 
     public PaymentResponse processPayment(UUID paymentId) {
         return restTemplate.postForObject(
-                paymentServiceUrl + "/" + paymentId + "/process",
+                paymentServiceUrl + "/api/payments" + "/" + paymentId + "/process",
                 null,
                 PaymentResponse.class
         );
@@ -66,7 +68,7 @@ public class PaymentClient {
 
     public RefundResponse refund(UUID paymentId, RefundRequest request) {
         return restTemplate.postForObject(
-                paymentServiceUrl + "/" + paymentId + "/refund",
+                paymentServiceUrl + "/api/payments" + "/" + paymentId + "/refund",
                 request,
                 RefundResponse.class
         );
@@ -75,13 +77,13 @@ public class PaymentClient {
     private String getAccessToken() {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("client_id", restaurantServiceClientId);
-        body.add("client_secret", restaurantServiceClientSecret);
+        TokenRequest body = new TokenRequest();
+        body.setClient_id(restaurantServiceClientId);
+        body.setClient_secret(restaurantServiceClientSecret);
 
-        HttpEntity<MultiValueMap<String, String>> entity =
+        HttpEntity<TokenRequest> entity =
                 new HttpEntity<>(body, headers);
 
         TokenResponse response = restTemplate.postForObject(
@@ -96,5 +98,6 @@ public class PaymentClient {
 
         return response.getAccess_token();
     }
+
 
 }

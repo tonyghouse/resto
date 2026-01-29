@@ -70,11 +70,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     private void validateAmounts(CreatePaymentRequest request) {
 
-        if (request.getPayableAmount()
-                .compareTo(request.getTotalAmount().add(request.getTaxAmount())) != 0) {
-            throw new RestoPaymentException("Payable amount mismatch", HttpStatus.BAD_REQUEST);
-        }
-
         if (request.getTotalAmount().signum() <= 0) {
             throw new RestoPaymentException("Total amount must be positive", HttpStatus.BAD_REQUEST);
         }

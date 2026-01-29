@@ -1,5 +1,107 @@
 ### Architecture Doc
 
+# Restaurant Service Architecture
+
+---
+
+## What it does
+- Manages restaurant branches
+- Manages menus, menu items, and combos
+- Exposes customer-facing menu APIs
+- Creates and manages orders
+- Calculates prices, taxes, and totals
+- Controls order state transitions
+- Integrates with Payment Service
+
+---
+
+## What it doesn’t do
+- Process payments internally
+- Decide payment success or failure
+- Handle payment gateways
+
+All pricing is calculated in this service.  
+Payment Service is treated as an external dependency.
+
+---
+
+## Menu & Catalog
+- Branch → Menu (Breakfast / Lunch / Dinner)
+- Menu → Menu Items
+- Combos built from menu items
+- Time-based active menus
+- Read-only customer menu APIs
+
+---
+
+## Order Management
+- Orders store **price snapshots**
+- Order items store unit price and quantity
+- Supports price preview before order creation
+- Prices never change after order creation
+
+---
+
+## Order State Machine
+**States:**
+- CREATED → ACCEPTED → PREPARING → READY → DELIVERED
+- CANCELLED (terminal)
+
+Rules:
+- Only valid transitions allowed
+- CANCELLED and DELIVERED are final
+- All transitions are recorded for audit
+
+---
+
+## Payment Integration
+- Payment initiated only after order is ACCEPTED
+- Final amounts sent to Payment Service
+- Payment ID stored in order
+- Supports retries and refunds
+
+Restaurant Service never trusts payment callbacks for amounts.
+
+---
+
+## APIs (High Level)
+- Admin: branch, menu, item, combo management
+- Customer: active menu, menu items, combos
+- Orders: create, preview, fetch
+- Order State: accept, prepare, ready, deliver, cancel
+- Payments: initiate, retry, callback, refund
+
+---
+
+## Design Principles
+- Clear service boundaries
+- Immutable financial data
+- Simple state machine
+- Business logic in services, not controllers
+
+---
+
+## Database
+- Orders store final payable amount
+- Order items store price snapshots
+- Order status history for auditing
+- No payment tables in this service
+
+---
+
+## Why this design
+- Matches real restaurant workflows
+- Safe for retries and refunds
+- Easy to reason about and test
+- Clean separation of concerns
+
+---
+
+## Future Improvements
+- Auto-cancel unpaid orders
+- Payment reconciliation jobs
+- Promotions and coupons
+- Event-driven integrations
 
 
 # Payment Service Architectue

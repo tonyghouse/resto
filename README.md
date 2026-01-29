@@ -22,7 +22,6 @@ This service is responsible for:
 - Synchronous payment processing
 - Payment retries and idempotency handling
 - Partial and full refunds
-- Item level billing
 
 Services mostly communicate over REST where we need a clear response back. For other things, domain events are published to Kafka so we have auditability and flexibility to extend later.
 
@@ -34,7 +33,7 @@ Services mostly communicate over REST where we need a clear response back. For o
 |---------|--------|
 | PostgreSQL | Persistent storage (separate DB for each service) |
 | Redis | Cache for menus and frequently used order data |
-| Kafka | Domain events, audit logs and async workflows |
+| Kafka | Domain events                                  |
 | Docker Compose | Local orchestration and deployment simulation |
 
 ---
