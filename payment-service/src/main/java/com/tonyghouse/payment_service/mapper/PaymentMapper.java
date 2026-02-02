@@ -8,6 +8,8 @@ import com.tonyghouse.payment_service.entity.Refund;
 
 
 public class PaymentMapper {
+    private PaymentMapper(){
+    }
 
     public static CreatePaymentResponse mapToCreatePaymentResponse(Payment payment) {
         CreatePaymentResponse createPaymentResponse = new CreatePaymentResponse();

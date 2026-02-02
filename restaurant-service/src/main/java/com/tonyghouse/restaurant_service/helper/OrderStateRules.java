@@ -35,11 +35,13 @@ public final class OrderStateRules {
         ALLOWED = Map.copyOf(map);
     }
 
-    public static boolean canTransition(
-            OrderStatus from,
-            OrderStatus to) {
+    public static boolean canTransition(OrderStatus from, OrderStatus to) {
+        if (from == null || to == null) {
+            return false;
+        }
         return ALLOWED.getOrDefault(from, Set.of()).contains(to);
     }
+
 
     private OrderStateRules() {}
 }

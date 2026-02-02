@@ -7,8 +7,8 @@ import com.tonyghouse.restaurant_service.dto.PaymentCallbackRequest;
 import com.tonyghouse.restaurant_service.dto.PriceBreakdown;
 import com.tonyghouse.restaurant_service.dto.RefundRequestDto;
 import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentResponse;
-import com.tonyghouse.restaurant_service.dto.payment.PaymentResponse;
 import com.tonyghouse.restaurant_service.entity.Order;
+import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.proxy.PaymentClientProxy;
 import com.tonyghouse.restaurant_service.repo.OrderRepository;
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ class OrderPaymentServiceImplTest {
 
         Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(RestoRestaurantException.class,
                 () -> service.initiatePayment(orderId, new InitiatePaymentRequest()));
     }
 
@@ -95,7 +95,7 @@ class OrderPaymentServiceImplTest {
 
         Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(RestoRestaurantException.class,
                 () -> service.initiatePayment(orderId, new InitiatePaymentRequest()));
     }
 
@@ -128,9 +128,21 @@ class OrderPaymentServiceImplTest {
 
         Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(RestoRestaurantException.class,
                 () -> service.handleCallback(orderId, req));
     }
+
+    @Test
+    void retryPayment_orderNotFound() {
+        UUID orderId = UUID.randomUUID();
+
+        Mockito.when(orderRepository.findById(orderId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RestoRestaurantException.class,
+                () -> service.retryPayment(orderId));
+    }
+
 
     @Test
     void retryPayment_success() {
@@ -166,4 +178,44 @@ class OrderPaymentServiceImplTest {
         Mockito.verify(paymentClientProxy)
                 .refund(Mockito.eq(paymentId), Mockito.any());
     }
+
+    @Test
+    void initiatePayment_orderNotFound() {
+        UUID orderId = UUID.randomUUID();
+
+        Mockito.when(orderRepository.findById(orderId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RestoRestaurantException.class,
+                () -> service.initiatePayment(orderId, new InitiatePaymentRequest()));
+    }
+
+    @Test
+    void handleCallback_orderNotFound() {
+        UUID orderId = UUID.randomUUID();
+
+        Mockito.when(orderRepository.findById(orderId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RestoRestaurantException.class,
+                () -> service.handleCallback(orderId, new PaymentCallbackRequest()));
+    }
+
+    @Test
+    void handleCallback_successBranch() {
+        UUID orderId = UUID.randomUUID();
+        UUID paymentId = UUID.randomUUID();
+
+        Order order = new Order();
+        order.setPaymentId(paymentId);
+
+        PaymentCallbackRequest req = new PaymentCallbackRequest();
+        req.setPaymentId(paymentId);
+        req.setStatus(PaymentStatus.SUCCESS);
+
+        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+
+        assertDoesNotThrow(() -> service.handleCallback(orderId, req));
+    }
+
 }

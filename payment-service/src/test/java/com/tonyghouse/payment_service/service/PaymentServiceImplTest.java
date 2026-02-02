@@ -107,6 +107,8 @@ class PaymentServiceImplTest {
                 () -> service.createPayment(req, "key"));
     }
 
+
+
     @Test
     void processPayment_idempotent() {
         UUID paymentId = UUID.randomUUID();
@@ -122,6 +124,119 @@ class PaymentServiceImplTest {
         Mockito.verify(paymentGatewayProcessor, Mockito.never())
                 .process(Mockito.any());
     }
+
+    @Test
+    void processPayment_notFound_throwsException() {
+        UUID paymentId = UUID.randomUUID();
+
+        Mockito.when(paymentRepository.findById(paymentId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(RestoPaymentException.class,
+                () -> service.processPayment(paymentId));
+
+        Mockito.verify(paymentGatewayProcessor, Mockito.never())
+                .process(Mockito.any());
+    }
+
+    @Test
+    void processPayment_idempotent_noProcessing() {
+        UUID paymentId = UUID.randomUUID();
+
+        Payment payment = new Payment();
+        payment.setStatus(PaymentStatus.SUCCESS);
+
+        Mockito.when(paymentRepository.findById(paymentId))
+                .thenReturn(Optional.of(payment));
+
+        Payment res = service.processPayment(paymentId);
+
+        assertEquals(PaymentStatus.SUCCESS, res.getStatus());
+
+        Mockito.verify(paymentGatewayProcessor, Mockito.never())
+                .process(Mockito.any());
+        Mockito.verify(paymentRepository, Mockito.never())
+                .save(Mockito.any());
+    }
+
+    @Test
+    void processPayment_success() {
+        UUID paymentId = UUID.randomUUID();
+
+        Payment payment = new Payment();
+        payment.setPaymentId(paymentId);
+        payment.setStatus(PaymentStatus.INITIATED);
+
+        Mockito.when(paymentRepository.findById(paymentId))
+                .thenReturn(Optional.of(payment));
+
+        Mockito.when(paymentRepository.save(Mockito.any()))
+                .thenAnswer(i -> i.getArgument(0));
+
+        Mockito.when(paymentGatewayProcessor.process(payment))
+                .thenReturn(PaymentResult.SUCCESS);
+
+        Payment res = service.processPayment(paymentId);
+
+        assertEquals(PaymentStatus.SUCCESS, res.getStatus());
+        assertEquals(Instant.parse("2025-01-01T00:00:00Z"), res.getUpdatedAt());
+
+        Mockito.verify(paymentRepository, Mockito.times(2)).save(Mockito.any());
+    }
+
+
+    @Test
+    void processPayment_failure() {
+        UUID paymentId = UUID.randomUUID();
+
+        Payment payment = new Payment();
+        payment.setStatus(PaymentStatus.INITIATED);
+
+        Mockito.when(paymentRepository.findById(paymentId))
+                .thenReturn(Optional.of(payment));
+
+        Mockito.when(paymentRepository.save(Mockito.any()))
+                .thenAnswer(i -> i.getArgument(0));
+
+        Mockito.when(paymentGatewayProcessor.process(payment))
+                .thenReturn(PaymentResult.FAILURE);
+
+        Payment res = service.processPayment(paymentId);
+
+        assertEquals(PaymentStatus.FAILED, res.getStatus());
+
+        Mockito.verify(paymentRepository, Mockito.times(2)).save(Mockito.any());
+    }
+
+    @Test
+    void processPayment_timeout_shouldRetryAndIncrementCounter() {
+        UUID paymentId = UUID.randomUUID();
+
+        Payment payment = new Payment();
+        payment.setStatus(PaymentStatus.INITIATED);
+        payment.setRetryCount(1);
+
+        Mockito.when(paymentRepository.findById(paymentId))
+                .thenReturn(Optional.of(payment));
+
+        Mockito.when(paymentRepository.save(Mockito.any()))
+                .thenAnswer(i -> i.getArgument(0));
+
+        Mockito.when(paymentGatewayProcessor.process(payment))
+                .thenReturn(PaymentResult.TIMEOUT);
+
+        Payment res = service.processPayment(paymentId);
+
+        assertEquals(PaymentStatus.RETRYING, res.getStatus());
+        assertEquals(2, res.getRetryCount());
+
+        Mockito.verify(paymentRepository, Mockito.times(2)).save(Mockito.any());
+    }
+
+
+
+
+
 
     @Test
     void getPayment_notFound() {

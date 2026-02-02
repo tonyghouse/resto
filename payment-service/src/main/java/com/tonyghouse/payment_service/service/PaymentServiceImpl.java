@@ -30,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment createPayment(CreatePaymentRequest request, String idempotencyKey) {
 
-        // ---------- Idempotency ----------
+        // Idempotency
         Optional<UUID> existingPaymentId =
                 idempotencyKeyRepository.findPaymentId(idempotencyKey);
 
@@ -38,8 +38,6 @@ public class PaymentServiceImpl implements PaymentService {
             return paymentRepository.findById(existingPaymentId.get())
                     .orElseThrow(() -> new IllegalStateException("Idempotent payment missing"));
         }
-
-        // ---------- Validation ----------
         validateAmounts(request);
 
         Payment payment = new Payment();

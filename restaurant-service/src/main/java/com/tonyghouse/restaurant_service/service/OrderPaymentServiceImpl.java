@@ -1,6 +1,7 @@
 package com.tonyghouse.restaurant_service.service;
 
 import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentResponse;
+import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.proxy.PaymentClientProxy;
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
 import com.tonyghouse.restaurant_service.constants.payment.PaymentStatus;
@@ -13,6 +14,7 @@ import com.tonyghouse.restaurant_service.dto.payment.PaymentResponse;
 import com.tonyghouse.restaurant_service.dto.payment.RefundRequest;
 import com.tonyghouse.restaurant_service.entity.Order;
 import com.tonyghouse.restaurant_service.repo.OrderRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,14 +41,14 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     public void initiatePayment(UUID orderId, InitiatePaymentRequest req) {
 
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+                .orElseThrow(() -> new RestoRestaurantException("Order not found", HttpStatus.NOT_FOUND));
 
         if (order.getPaymentId() != null) {
-            throw new IllegalStateException("Payment already initiated");
+            throw new RestoRestaurantException("Payment already initiated", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (order.getStatus() != OrderStatus.ACCEPTED) {
-            throw new IllegalStateException("Payment allowed only after ACCEPTED");
+            throw new RestoRestaurantException("Payment allowed only after ACCEPTED", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         PriceBreakdown breakdown =
@@ -77,10 +79,10 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     public void handleCallback(UUID orderId, PaymentCallbackRequest request) {
 
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+                .orElseThrow(() -> new RestoRestaurantException("Order not found", HttpStatus.NOT_FOUND));
 
         if (!order.getPaymentId().equals(request.getPaymentId())) {
-            throw new IllegalArgumentException("Payment mismatch");
+            throw new RestoRestaurantException("Payment mismatch", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (request.getStatus() == PaymentStatus.SUCCESS) {
@@ -98,10 +100,10 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     public void retryPayment(UUID orderId) {
 
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+                .orElseThrow(() -> new RestoRestaurantException("Order not found", HttpStatus.NOT_FOUND));
 
         if (order.getPaymentId() == null) {
-            throw new IllegalStateException("No payment to retry");
+            throw new RestoRestaurantException("No payment to retry", HttpStatus.NOT_FOUND);
         }
 
         paymentClientProxy.processPayment(order.getPaymentId());
@@ -111,10 +113,10 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
     public void refund(UUID orderId, RefundRequestDto req) {
 
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+                .orElseThrow(() -> new RestoRestaurantException("Order not found", HttpStatus.NOT_FOUND));
 
         if (order.getPaymentId() == null) {
-            throw new IllegalStateException("Payment not initiated");
+            throw new RestoRestaurantException("Payment not initiated", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         RefundRequest refund = new RefundRequest();
