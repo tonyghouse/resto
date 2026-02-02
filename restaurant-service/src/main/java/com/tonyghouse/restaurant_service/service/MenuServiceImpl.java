@@ -37,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
 
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() ->
-                        new RestoRestaurantException("Branch not found", HttpStatus.INTERNAL_SERVER_ERROR));
+                        new RestoRestaurantException("Branch not found", HttpStatus.NOT_FOUND));
 
         if (menuRepository.existsByBranch_IdAndMenuType(branchId, request.getMenuType())) {
             throw new RestoRestaurantException(

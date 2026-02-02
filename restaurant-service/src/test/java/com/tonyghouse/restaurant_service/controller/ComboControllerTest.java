@@ -12,6 +12,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -91,16 +95,23 @@ class ComboControllerTest {
     @WithMockUser(roles = "ADMIN")
     void shouldListCombos() throws Exception {
 
-        List<ComboResponse> responses = Arrays.asList(
+        List<ComboResponse> content = Arrays.asList(
                 new ComboResponse(),
                 new ComboResponse()
         );
 
-        Mockito.when(comboService.getAll())
-                .thenReturn(responses);
+        Page<ComboResponse> page =
+                new PageImpl<>(content, PageRequest.of(0, 20), content.size());
 
-        mockMvc.perform(get("/api/combos"))
-                .andExpect(status().isOk());
+        Mockito.when(comboService.getAll(Mockito.any(Pageable.class)))
+                .thenReturn(page);
+
+        mockMvc.perform(get("/api/combos")
+                        .param("page", "0")
+                        .param("size", "20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
     }
 
     @Test

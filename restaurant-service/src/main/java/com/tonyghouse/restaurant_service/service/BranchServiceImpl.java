@@ -6,13 +6,14 @@ import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.mapper.BranchMapper;
 import com.tonyghouse.restaurant_service.repo.BranchRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.time.Clock;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,17 +62,17 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<BranchResponse> getAllBranches() {
-        return branchRepository.findAll()
-                .stream()
-                .map(BranchMapper::mapToResponse)
-                .toList();
+    public Page<BranchResponse> getAllBranches(Pageable pageable) {
+
+        return branchRepository.findAll(pageable)
+                .map(BranchMapper::mapToResponse);
     }
+
 
     @Override
     public BranchResponse updateBranch(UUID branchId, UpdateBranchRequest request) {
         Branch branch = branchRepository.findById(branchId)
-                .orElseThrow(() -> new RestoRestaurantException("Branch not found", HttpStatus.INTERNAL_SERVER_ERROR));
+                .orElseThrow(() -> new RestoRestaurantException("Branch not found", HttpStatus.NOT_FOUND));
 
         branch.setName(request.getName());
         branch.setLocation(request.getLocation());
@@ -89,7 +90,7 @@ public class BranchServiceImpl implements BranchService {
     public void deleteBranch(UUID branchId) {
         // hard delete
         if (!branchRepository.existsById(branchId)) {
-            throw new RestoRestaurantException("Branch not found", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RestoRestaurantException("Branch not found", HttpStatus.NOT_FOUND);
         }
 
         branchRepository.deleteById(branchId);

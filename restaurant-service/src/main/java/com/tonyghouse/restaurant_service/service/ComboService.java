@@ -4,8 +4,9 @@ package com.tonyghouse.restaurant_service.service;
 import com.tonyghouse.restaurant_service.dto.ComboResponse;
 import com.tonyghouse.restaurant_service.dto.CreateComboRequest;
 import com.tonyghouse.restaurant_service.dto.UpdateComboRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ComboService {
@@ -14,7 +15,7 @@ public interface ComboService {
 
     ComboResponse get(UUID comboId);
 
-    List<ComboResponse> getAll();
+    Page<ComboResponse> getAll(Pageable pageable);
 
     ComboResponse update(UUID comboId, UpdateComboRequest request);
 

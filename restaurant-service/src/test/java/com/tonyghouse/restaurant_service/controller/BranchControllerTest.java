@@ -19,6 +19,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -90,17 +94,24 @@ class BranchControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldListBranches() throws Exception {
-
         BranchResponse response1 = new BranchResponse();
         BranchResponse response2 = new BranchResponse();
-        List<BranchResponse> responses = Arrays.asList(response1, response2);
+        List<BranchResponse> content = Arrays.asList(response1, response2);
 
-        Mockito.when(branchService.getAllBranches())
-                .thenReturn(responses);
+        Page<BranchResponse> page =
+                new PageImpl<>(content, PageRequest.of(0, 20), content.size());
 
-        mockMvc.perform(get("/api/branches"))
-                .andExpect(status().isOk());
+        Mockito.when(branchService.getAllBranches(Mockito.any(Pageable.class)))
+                .thenReturn(page);
+
+        mockMvc.perform(get("/api/branches")
+                        .param("page", "0")
+                        .param("size", "20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
     }
+
 
     @Test
     @WithMockUser(roles = "ADMIN")

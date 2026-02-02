@@ -4,19 +4,20 @@ package com.tonyghouse.restaurant_service.service;
 import com.tonyghouse.restaurant_service.dto.CreateMenuItemRequest;
 import com.tonyghouse.restaurant_service.dto.MenuItemResponse;
 import com.tonyghouse.restaurant_service.dto.UpdateMenuItemRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface MenuItemService {
 
-    MenuItemResponse create(CreateMenuItemRequest request);
+    MenuItemResponse createMenuItem(CreateMenuItemRequest request);
 
-    MenuItemResponse get(UUID itemId);
+    MenuItemResponse getMenuItem(UUID itemId);
 
-    List<MenuItemResponse> getAll();
+    Page<MenuItemResponse> getMenuItems(Pageable pageable);
 
-    MenuItemResponse update(UUID itemId, UpdateMenuItemRequest request);
+    MenuItemResponse updateMenuItem(UUID itemId, UpdateMenuItemRequest request);
 
-    MenuItemResponse updateAvailability(UUID itemId, boolean available);
+    MenuItemResponse updateMenuItemAvailability(UUID itemId, boolean available);
 }

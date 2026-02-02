@@ -8,12 +8,13 @@ import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
 import com.tonyghouse.restaurant_service.mapper.MenuItemMapper;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,7 +26,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 
 
     @Override
-    public MenuItemResponse create(CreateMenuItemRequest request) {
+    public MenuItemResponse createMenuItem(CreateMenuItemRequest request) {
         MenuItem menuItem = new MenuItem();
         menuItem.setId(UUID.randomUUID());
         menuItem.setName(request.getName());
@@ -41,7 +42,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public MenuItemResponse get(UUID itemId) {
+    public MenuItemResponse getMenuItem(UUID itemId) {
         return repository.findById(itemId)
                 .map(MenuItemMapper::toMenuItemResponse)
                 .orElseThrow(() ->
@@ -49,15 +50,14 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<MenuItemResponse> getAll() {
-        return repository.findAll()
-                .stream()
-                .map(MenuItemMapper::toMenuItemResponse)
-                .toList();
+    public Page<MenuItemResponse> getMenuItems(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(MenuItemMapper::toMenuItemResponse);
     }
 
+
     @Override
-    public MenuItemResponse update(UUID itemId, UpdateMenuItemRequest request) {
+    public MenuItemResponse updateMenuItem(UUID itemId, UpdateMenuItemRequest request) {
         MenuItem entity = repository.findById(itemId)
                 .orElseThrow(() ->
                         new RestoRestaurantException("Menu item not found", HttpStatus.INTERNAL_SERVER_ERROR));
@@ -73,7 +73,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public MenuItemResponse updateAvailability(UUID itemId, boolean available) {
+    public MenuItemResponse updateMenuItemAvailability(UUID itemId, boolean available) {
         MenuItem entity = repository.findById(itemId)
                 .orElseThrow(() ->
                         new RestoRestaurantException("Menu item not found", HttpStatus.INTERNAL_SERVER_ERROR));

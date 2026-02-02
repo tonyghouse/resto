@@ -15,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -111,11 +115,15 @@ class BranchServiceImplTest {
         Branch b2 = new Branch();
         b2.setName("B2");
 
-        Mockito.when(branchRepository.findAll()).thenReturn(List.of(b1, b2));
+        List<Branch> branches = List.of(b1, b2);
 
-        List<BranchResponse> res = branchService.getAllBranches();
-
-        assertEquals(2, res.size());
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Branch> page = new PageImpl<>(branches, pageable, branches.size());
+        Mockito.when(branchRepository.findAll(Mockito.any(Pageable.class)))
+                .thenReturn(page);
+        Page<BranchResponse> result = branchService.getAllBranches(pageable);
+        assertEquals(2, result.getContent().size());
+        assertEquals(2, result.getTotalElements());
     }
 
     @Test

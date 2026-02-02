@@ -95,16 +95,6 @@ class ComboServiceImplTest {
         assertThrows(RestoRestaurantException.class, () -> comboService.get(id));
     }
 
-    @Test
-    void getAll_cacheHit() {
-        Mockito.when(jedis.get("combo:all"))
-                .thenReturn("[]");
-
-        List<ComboResponse> res = comboService.getAll();
-
-        assertNotNull(res);
-    }
-
 
     @Test
     void update() {

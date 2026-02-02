@@ -11,6 +11,8 @@ import com.tonyghouse.restaurant_service.repo.ComboRepository;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPool;
@@ -76,32 +78,11 @@ public class ComboServiceImpl implements ComboService {
     }
 
     @Override
-    public List<ComboResponse> getAll() {
-
-        String cacheKey = "combo:all";
-
-        try (var jedis = jedisPool.getResource()) {
-            String cached = jedis.get(cacheKey);
-            if (cached != null) {
-                return ComboMapper.fromJsonList(cached);
-            }
-        }
-
-        List<ComboResponse> responses = comboRepository.findAll()
-                .stream()
-                .map(ComboMapper::toResponse)
-                .toList();
-
-        try (var jedis = jedisPool.getResource()) {
-            jedis.setex(
-                    cacheKey,
-                    CACHE_TTL_SECONDS,
-                    ComboMapper.toJsonList(responses)
-            );
-        }
-
-        return responses;
+    public Page<ComboResponse> getAll(Pageable pageable) {
+        return comboRepository.findAll(pageable)
+                .map(ComboMapper::toResponse);
     }
+
 
     @Override
     public ComboResponse update(UUID comboId, UpdateComboRequest request) {

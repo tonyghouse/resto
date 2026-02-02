@@ -19,6 +19,10 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -79,7 +83,7 @@ class MenuItemControllerTest {
         request.setCategory("Breakfast");
         request.setFoodType(FoodType.VEGETARIAN);
 
-        Mockito.when(service.create(any())).thenReturn(mockResponse());
+        Mockito.when(service.createMenuItem(any())).thenReturn(mockResponse());
 
         mockMvc.perform(post("/api/menu-items")
                         .with(csrf())
@@ -92,7 +96,7 @@ class MenuItemControllerTest {
     @WithMockUser(roles = "ADMIN")
     void shouldGetMenuItem() throws Exception {
 
-        Mockito.when(service.get(ITEM_ID)).thenReturn(mockResponse());
+        Mockito.when(service.getMenuItem(ITEM_ID)).thenReturn(mockResponse());
 
         mockMvc.perform(get("/api/menu-items/{id}", ITEM_ID))
                 .andExpect(status().isOk())
@@ -103,12 +107,22 @@ class MenuItemControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldListMenuItems() throws Exception {
+        MenuItemResponse response = mockResponse();
+        List<MenuItemResponse> content = List.of(response);
+        Page<MenuItemResponse> page =
+                new PageImpl<>(content, PageRequest.of(0, 20), 1);
 
-        Mockito.when(service.getAll()).thenReturn(List.of(mockResponse()));
+        Mockito.when(service.getMenuItems(Mockito.any(Pageable.class)))
+                .thenReturn(page);
 
-        mockMvc.perform(get("/api/menu-items"))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/menu-items")
+                        .param("page", "0")
+                        .param("size", "20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.length()").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1));
     }
+
 
     @Test
     @WithMockUser(roles = "ADMIN")
@@ -126,7 +140,7 @@ class MenuItemControllerTest {
         MenuItemResponse updated = mockResponse();
         updated.setName("Paneer Dosa");
 
-        Mockito.when(service.update(eq(ITEM_ID), any())).thenReturn(updated);
+        Mockito.when(service.updateMenuItem(eq(ITEM_ID), any())).thenReturn(updated);
 
         mockMvc.perform(put("/api/menu-items/{id}", ITEM_ID)
                         .with(csrf())
@@ -145,7 +159,7 @@ class MenuItemControllerTest {
         MenuItemResponse resp = mockResponse();
         resp.setAvailable(false);
 
-        Mockito.when(service.updateAvailability(ITEM_ID, false)).thenReturn(resp);
+        Mockito.when(service.updateMenuItemAvailability(ITEM_ID, false)).thenReturn(resp);
 
         mockMvc.perform(patch("/api/menu-items/{id}/availability", ITEM_ID)
                         .with(csrf())

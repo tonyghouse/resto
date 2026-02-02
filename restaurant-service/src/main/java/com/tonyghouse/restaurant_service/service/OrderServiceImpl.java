@@ -100,7 +100,6 @@ public class OrderServiceImpl implements OrderService {
 
         PriceBreakdown breakdown = new PriceBreakdown();
         breakdown.setGrandTotal(order.getTotalAmount());
-
         return OrderMapper.toResponse(order, breakdown);
     }
 

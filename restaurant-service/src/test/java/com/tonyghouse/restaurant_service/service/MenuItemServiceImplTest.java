@@ -17,6 +17,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -47,7 +51,7 @@ class MenuItemServiceImplTest {
     }
 
     @Test
-    void create_success() {
+    void create_MenuItem_success() {
         CreateMenuItemRequest request = new CreateMenuItemRequest();
         request.setName("Burger");
         request.setDescription("Cheese burger");
@@ -61,7 +65,7 @@ class MenuItemServiceImplTest {
         Mockito.when(repository.save(Mockito.any(MenuItem.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        MenuItemResponse response = service.create(request);
+        MenuItemResponse response = service.createMenuItem(request);
 
         Mockito.verify(repository).save(captor.capture());
 
@@ -83,7 +87,7 @@ class MenuItemServiceImplTest {
 
 
     @Test
-    void get_success() {
+    void get_MenuItem_success() {
         UUID id = UUID.randomUUID();
         MenuItem item = new MenuItem();
         item.setId(id);
@@ -92,33 +96,39 @@ class MenuItemServiceImplTest {
         Mockito.when(repository.findById(id))
                 .thenReturn(Optional.of(item));
 
-        MenuItemResponse res = service.get(id);
+        MenuItemResponse res = service.getMenuItem(id);
 
         assertEquals("Item", res.getName());
     }
 
     @Test
-    void get_notFound() {
+    void get_MenuItem_notFound() {
         Mockito.when(repository.findById(Mockito.any()))
                 .thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class,
-                () -> service.get(UUID.randomUUID()));
+                () -> service.getMenuItem(UUID.randomUUID()));
     }
 
     @Test
-    void getAll_success() {
-        Mockito.when(repository.findAll())
-                .thenReturn(List.of(new MenuItem(), new MenuItem()));
+    void getMenuItemAll_success() {
+        List<MenuItem> entities = List.of(new MenuItem(), new MenuItem());
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<MenuItem> page =
+                new PageImpl<>(entities, pageable, entities.size());
 
-        List<MenuItemResponse> res = service.getAll();
+        Mockito.when(repository.findAll(Mockito.any(Pageable.class)))
+                .thenReturn(page);
 
-        assertEquals(2, res.size());
+        Page<MenuItemResponse> result = service.getMenuItems(pageable);
+
+        assertEquals(2, result.getContent().size());
+        assertEquals(2, result.getTotalElements());
     }
 
 
     @Test
-    void update_success() {
+    void update_MenuItem_success() {
         UUID id = UUID.randomUUID();
 
         MenuItem existing = new MenuItem();
@@ -138,7 +148,7 @@ class MenuItemServiceImplTest {
         Mockito.when(repository.save(Mockito.any(MenuItem.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        MenuItemResponse response = service.update(id, request);
+        MenuItemResponse response = service.updateMenuItem(id, request);
 
         assertEquals("Pizza", existing.getName());
         assertEquals("Farmhouse", existing.getDescription());
@@ -154,16 +164,16 @@ class MenuItemServiceImplTest {
 
 
     @Test
-    void update_notFound() {
+    void update_MenuItem_notFound() {
         Mockito.when(repository.findById(Mockito.any()))
                 .thenReturn(Optional.empty());
 
         assertThrows(RestoRestaurantException.class,
-                () -> service.update(UUID.randomUUID(), new UpdateMenuItemRequest()));
+                () -> service.updateMenuItem(UUID.randomUUID(), new UpdateMenuItemRequest()));
     }
 
     @Test
-    void updateAvailability_success() {
+    void updateMenuItemAvailability_success() {
         UUID id = UUID.randomUUID();
         MenuItem item = new MenuItem();
         item.setId(id);
@@ -175,20 +185,20 @@ class MenuItemServiceImplTest {
         Mockito.when(repository.save(Mockito.any(MenuItem.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        MenuItemResponse res = service.updateAvailability(id, false);
+        MenuItemResponse res = service.updateMenuItemAvailability(id, false);
         assertFalse(item.getAvailable());
         Mockito.verify(repository).save(item);
         assertFalse(res.getAvailable());
     }
 
     @Test
-    void updateAvailability_notFound() {
+    void updateMenuItemAvailability_notFound() {
         Mockito.when(repository.findById(Mockito.any()))
                 .thenReturn(Optional.empty());
 
         assertThrows(
                 RestoRestaurantException.class,
-                () -> service.updateAvailability(UUID.randomUUID(), true)
+                () -> service.updateMenuItemAvailability(UUID.randomUUID(), true)
         );
     }
 
