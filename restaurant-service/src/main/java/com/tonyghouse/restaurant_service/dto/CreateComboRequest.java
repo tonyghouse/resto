@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 public class CreateComboRequest {
@@ -18,4 +19,7 @@ public class CreateComboRequest {
     @NotNull
     @Positive
     private BigDecimal comboPrice;
+
+    @NotNull
+    private UUID branchId;
 }

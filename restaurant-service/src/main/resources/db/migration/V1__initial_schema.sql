@@ -54,11 +54,14 @@ CREATE TABLE menu_menu_item (
 
 CREATE TABLE combo (
     id              UUID PRIMARY KEY,
+    branch_id       UUID NOT NULL,
     name            VARCHAR(150) NOT NULL,
     description     TEXT,
     combo_price     NUMERIC(10,2) NOT NULL,
     active          BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_combo_branch
+            FOREIGN KEY (branch_id) REFERENCES branch(id)
 );
 
 CREATE TABLE combo_item (
@@ -144,3 +147,36 @@ CREATE TABLE order_status_history (
             'CANCELLED'
         ))
 );
+
+-- branch
+CREATE INDEX idx_branch_name ON branch(name);
+
+-- menu
+CREATE INDEX idx_menu_branch_id ON menu(branch_id);
+CREATE INDEX idx_menu_branch_active_type ON menu(branch_id, active, menu_type);
+
+-- menu_item
+CREATE INDEX idx_menu_item_category ON menu_item(category);
+CREATE INDEX idx_menu_item_food_type ON menu_item(food_type);
+CREATE INDEX idx_menu_item_avail_cat ON menu_item(available, category);
+
+-- menu_menu_item
+CREATE INDEX idx_mmi_item_id ON menu_menu_item(menu_item_id);
+
+-- combo
+CREATE INDEX idx_combo_branch_id ON combo(branch_id);
+CREATE INDEX idx_combo_branch_active ON combo(branch_id, active);
+
+-- combo_item
+CREATE INDEX idx_combo_item_item_id ON combo_item(menu_item_id);
+
+-- orders
+CREATE INDEX idx_orders_branch_id ON orders(branch_id);
+CREATE INDEX idx_orders_payment_id ON orders(payment_id);
+
+-- order_item
+CREATE INDEX idx_order_item_order_id ON order_item(order_id);
+
+-- order_status_history
+CREATE INDEX idx_order_status_order_id ON order_status_history(order_id);
+CREATE INDEX idx_order_status_order_time ON order_status_history(order_id, changed_at);

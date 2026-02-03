@@ -186,3 +186,35 @@ Simple, testable, matches real payment systems. Focused on payments only.
 - Async processing
 - Scheduled retries
 - Better monitoring
+
+## Schema Architecture
+
+### Restaurant Service Schema
+![Restaurant Schema](./schemas/restaurant_schema.png)
+
+Shows:
+- branches, menus, menu_items, combos
+- orders, order_items (price snapshots)
+- order_status_history
+- No payment tables (strict separation)
+
+---
+
+### Payment Service Schema
+![Payment Schema](./schemas/payment_schema.png)
+
+Shows:
+- payments
+- refunds
+- payment → refunds relationship
+- No order/menu tables
+
+---
+
+### Design Intent
+Both services maintain **independent databases**.
+
+- Restaurant Service → catalog + orders
+- Payment Service → payments only
+- Communication via APIs
+- No shared schema or cross-service joins

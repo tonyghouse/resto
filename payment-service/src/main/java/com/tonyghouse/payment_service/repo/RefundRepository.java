@@ -16,7 +16,7 @@ public interface RefundRepository extends JpaRepository<Refund, UUID> {
     @Query("""
             SELECT COALESCE(SUM(r.refundAmount), 0)
             FROM Refund r
-            WHERE r.paymentId = :paymentId
+            WHERE r.payment.paymentId = :paymentId
            """)
     Optional<BigDecimal> sumRefundedAmountRaw(@Param("paymentId") UUID paymentId);
 

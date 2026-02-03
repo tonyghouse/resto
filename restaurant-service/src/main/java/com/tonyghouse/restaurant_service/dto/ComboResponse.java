@@ -12,6 +12,7 @@ public class ComboResponse {
 
     private UUID id;
     private String name;
+    private String branchId;
     private String description;
     private BigDecimal comboPrice;
     private boolean active;

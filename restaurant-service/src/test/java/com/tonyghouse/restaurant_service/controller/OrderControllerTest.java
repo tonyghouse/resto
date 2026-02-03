@@ -179,16 +179,6 @@ class OrderControllerTest {
 
     @Test
     @WithMockUser(roles = "CUSTOMER")
-    void shouldHandleCallback() throws Exception {
-        mockMvc.perform(post("/api/orders/{id}/payments/callback", ORDER_ID)
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser(roles = "CUSTOMER")
     void shouldRetryPayment() throws Exception {
         mockMvc.perform(post("/api/orders/{id}/payments/retry", ORDER_ID)
                         .with(csrf()))

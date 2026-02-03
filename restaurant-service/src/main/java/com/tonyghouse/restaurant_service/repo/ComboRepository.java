@@ -10,5 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ComboRepository extends JpaRepository<Combo, UUID> {
 
-    List<Combo> findByActiveTrue();
+    List<Combo> findByActiveTrueAndBranch_Id(UUID branchId);
+    boolean existsByBranch_IdAndName(UUID branchId, String name);
 }

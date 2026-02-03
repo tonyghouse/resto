@@ -6,6 +6,8 @@ import com.tonyghouse.payment_service.dto.RefundResponse;
 import com.tonyghouse.payment_service.entity.Payment;
 import com.tonyghouse.payment_service.entity.Refund;
 
+import java.util.UUID;
+
 
 public class PaymentMapper {
     private PaymentMapper(){
@@ -37,10 +39,10 @@ public class PaymentMapper {
         return paymentResponse;
     }
 
-    public static RefundResponse toRefundResponse(Refund refund) {
+    public static RefundResponse toRefundResponse(Refund refund, UUID paymentId) {
         RefundResponse refundResponse = new RefundResponse();
         refundResponse.setRefundId(refund.getRefundId());
-        refundResponse.setPaymentId(refund.getPaymentId());
+        refundResponse.setPaymentId(paymentId);
         refundResponse.setRefundAmount(refund.getRefundAmount());
         refundResponse.setStatus(refund.getStatus());
         refundResponse.setCreatedAt(refund.getCreatedAt());

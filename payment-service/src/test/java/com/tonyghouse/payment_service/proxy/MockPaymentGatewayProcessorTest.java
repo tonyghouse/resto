@@ -3,7 +3,6 @@ package com.tonyghouse.payment_service.proxy;
 import com.tonyghouse.payment_service.constants.PaymentResult;
 import com.tonyghouse.payment_service.entity.Payment;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -21,7 +20,6 @@ class MockPaymentGatewayProcessorTest {
     }
 
     @Test
-    @DisplayName("Should return TIMEOUT when hash divisible by 5")
     void shouldReturnTimeout() {
         Payment payment = new Payment();
         payment.setPaymentId(findIdMatching(h -> h % 5 == 0));
@@ -30,7 +28,6 @@ class MockPaymentGatewayProcessorTest {
     }
 
     @Test
-    @DisplayName("Should return SUCCESS when hash divisible by 2 but not 5")
     void shouldReturnSuccess() {
         Payment payment = new Payment();
         payment.setPaymentId(findIdMatching(h -> h % 2 == 0 && h % 5 != 0));
@@ -39,7 +36,6 @@ class MockPaymentGatewayProcessorTest {
     }
 
     @Test
-    @DisplayName("Should return FAILURE when hash is odd")
     void shouldReturnFailure() {
         Payment payment = new Payment();
         payment.setPaymentId(findIdMatching(h -> h % 2 != 0));

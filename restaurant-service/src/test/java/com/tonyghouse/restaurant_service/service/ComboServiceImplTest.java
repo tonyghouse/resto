@@ -3,9 +3,11 @@ package com.tonyghouse.restaurant_service.service;
 import com.tonyghouse.restaurant_service.dto.ComboResponse;
 import com.tonyghouse.restaurant_service.dto.CreateComboRequest;
 import com.tonyghouse.restaurant_service.dto.UpdateComboRequest;
+import com.tonyghouse.restaurant_service.entity.Branch;
 import com.tonyghouse.restaurant_service.entity.Combo;
 import com.tonyghouse.restaurant_service.entity.MenuItem;
 import com.tonyghouse.restaurant_service.exception.RestoRestaurantException;
+import com.tonyghouse.restaurant_service.repo.BranchRepository;
 import com.tonyghouse.restaurant_service.repo.ComboRepository;
 import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,6 @@ import redis.clients.jedis.JedisPool;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,6 +40,9 @@ class ComboServiceImplTest {
 
     @Mock
     MenuItemRepository menuItemRepository;
+
+    @Mock
+    BranchRepository branchRepository;
 
     @Mock
     JedisPool jedisPool;
@@ -59,45 +63,62 @@ class ComboServiceImplTest {
     }
 
     @Test
-    void create() {
+    void createCombo() {
+
+        UUID branchId = UUID.randomUUID();
+
         CreateComboRequest req = new CreateComboRequest();
+        req.setBranchId(branchId);
         req.setName("C");
         req.setDescription("D");
         req.setComboPrice(BigDecimal.valueOf(100.0));
 
-        Mockito.when(comboRepository.save(Mockito.any()))
-                .thenAnswer(i -> i.getArgument(0));
+        Branch branch = new Branch();
+        branch.setId(branchId);
 
-        ComboResponse res = comboService.create(req);
+        Mockito.when(branchRepository.findById(branchId))
+                .thenReturn(Optional.of(branch));
+
+        Mockito.when(comboRepository.existsByBranch_IdAndName(branchId, "C"))
+                .thenReturn(false);
+
+        Mockito.when(comboRepository.save(Mockito.any(Combo.class)))
+                .thenAnswer(inv -> {
+                    Combo c = inv.getArgument(0);
+                    c.setId(UUID.randomUUID()); // simulate DB generated id
+                    return c;
+                });
+
+        ComboResponse res = comboService.createCombo(req);
 
         assertEquals("C", res.getName());
-
     }
 
+
     @Test
-    void get_cacheHit() {
+    void get_Combo_cacheHit() {
         UUID id = UUID.randomUUID();
         Mockito.when(jedis.get("combo:" + id))
                 .thenReturn("{\"id\":\"" + id + "\",\"name\":\"C\"}");
 
-        ComboResponse res = comboService.get(id);
+        ComboResponse res = comboService.getCombo(id);
 
         assertEquals(id, res.getId());
     }
 
 
     @Test
-    void get_notFound() {
+    void get_Combo_notFound() {
         UUID id = UUID.randomUUID();
         Mockito.when(jedis.get("combo:" + id)).thenReturn(null);
         Mockito.when(comboRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(RestoRestaurantException.class, () -> comboService.get(id));
+        assertThrows(RestoRestaurantException.class, () -> comboService.getCombo(id));
     }
 
 
     @Test
-    void update() {
+    void updateCombo() {
         UUID id = UUID.randomUUID();
         Combo combo = new Combo();
         combo.setId(id);
@@ -110,23 +131,23 @@ class ComboServiceImplTest {
         Mockito.when(comboRepository.findById(id)).thenReturn(Optional.of(combo));
         Mockito.when(comboRepository.save(combo)).thenReturn(combo);
 
-        ComboResponse res = comboService.update(id, req);
+        ComboResponse res = comboService.updateCombo(id, req);
 
         assertEquals("N", res.getName());
         Mockito.verify(jedis).del("combo:" + id);
     }
 
     @Test
-    void update_notFound() {
+    void update_Combo_notFound() {
         UUID id = UUID.randomUUID();
         Mockito.when(comboRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(RestoRestaurantException.class,
-                () -> comboService.update(id, new UpdateComboRequest()));
+                () -> comboService.updateCombo(id, new UpdateComboRequest()));
     }
 
     @Test
-    void updateStatus() {
+    void updateComboStatus() {
         UUID id = UUID.randomUUID();
         Combo combo = new Combo();
         combo.setId(id);
@@ -134,14 +155,14 @@ class ComboServiceImplTest {
         Mockito.when(comboRepository.findById(id)).thenReturn(Optional.of(combo));
         Mockito.when(comboRepository.save(combo)).thenReturn(combo);
 
-        ComboResponse res = comboService.updateStatus(id, true);
+        ComboResponse res = comboService.updateComboStatus(id, true);
 
         assertTrue(res.isActive());
         Mockito.verify(jedis).del("combo:" + id);
     }
 
     @Test
-    void addItem() {
+    void addItemToCombo() {
         UUID comboId = UUID.randomUUID();
         UUID itemId = UUID.randomUUID();
 
@@ -151,14 +172,14 @@ class ComboServiceImplTest {
         Mockito.when(comboRepository.findById(comboId)).thenReturn(Optional.of(combo));
         Mockito.when(menuItemRepository.findById(itemId)).thenReturn(Optional.of(item));
 
-        comboService.addItem(comboId, itemId);
+        comboService.addItemToCombo(comboId, itemId);
 
         Mockito.verify(comboRepository).save(combo);
         Mockito.verify(jedis).del("combo:" + comboId);
     }
 
     @Test
-    void removeItem() {
+    void removeItemFromCombo() {
         UUID comboId = UUID.randomUUID();
         UUID itemId = UUID.randomUUID();
 
@@ -169,7 +190,7 @@ class ComboServiceImplTest {
         Mockito.when(comboRepository.findById(comboId)).thenReturn(Optional.of(combo));
         Mockito.when(menuItemRepository.findById(itemId)).thenReturn(Optional.of(item));
 
-        comboService.removeItem(comboId, itemId);
+        comboService.removeItemFromCombo(comboId, itemId);
 
         Mockito.verify(comboRepository).save(combo);
         Mockito.verify(jedis).del("combo:" + comboId);

@@ -125,17 +125,6 @@ public class OrderController {
     }
 
 
-    @PostMapping("/{orderId}/payments/callback")
-    @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
-    public void callback(
-            @PathVariable UUID orderId,
-            @RequestBody PaymentCallbackRequest request) {
-        log.debug("Payment callback received. orderId={}, status={}",
-                orderId, request.getStatus());
-        orderPaymentService.handleCallback(orderId, request);
-    }
-
-
     @PostMapping("/{orderId}/payments/retry")
     @PreAuthorize("hasAnyRole('STAFF', 'CUSTOMER')") //Not for Admin. Staff collects money by hand and pay
     public void retry(@PathVariable UUID orderId) {

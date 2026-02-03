@@ -10,7 +10,7 @@ public class MockPaymentGatewayProcessor implements PaymentGatewayProcessor {
     @Override
     public PaymentResult process(Payment payment) {
 
-        // Simulate real-world behavior
+        // Simulating real-world behavior
         int hash = payment.getPaymentId().hashCode();
 
         if (hash % 5 == 0) {

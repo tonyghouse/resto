@@ -29,6 +29,17 @@ CREATE TABLE refund (
     created_at TIMESTAMP NOT NULL DEFAULT now()
 );
 
+ALTER TABLE refund
+ADD CONSTRAINT fk_refund_payment
+FOREIGN KEY (payment_id)
+REFERENCES payment(payment_id)
+ON DELETE RESTRICT;
+
+ALTER TABLE idempotency_key
+ADD CONSTRAINT fk_idempotency_payment
+FOREIGN KEY (payment_id)
+REFERENCES payment(payment_id)
+ON DELETE CASCADE;
 
 CREATE INDEX idx_payment_order_id ON payment(order_id);
 CREATE INDEX idx_refund_payment_id ON refund(payment_id);

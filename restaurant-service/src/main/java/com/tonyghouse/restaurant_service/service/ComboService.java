@@ -11,17 +11,17 @@ import java.util.UUID;
 
 public interface ComboService {
 
-    ComboResponse create(CreateComboRequest request);
+    ComboResponse createCombo(CreateComboRequest request);
 
-    ComboResponse get(UUID comboId);
+    ComboResponse getCombo(UUID comboId);
 
-    Page<ComboResponse> getAll(Pageable pageable);
+    Page<ComboResponse> getCombos(Pageable pageable);
 
-    ComboResponse update(UUID comboId, UpdateComboRequest request);
+    ComboResponse updateCombo(UUID comboId, UpdateComboRequest request);
 
-    ComboResponse updateStatus(UUID comboId, boolean active);
+    ComboResponse updateComboStatus(UUID comboId, boolean active);
 
-    void addItem(UUID comboId, UUID itemId);
+    void addItemToCombo(UUID comboId, UUID itemId);
 
-    void removeItem(UUID comboId, UUID itemId);
+    void removeItemFromCombo(UUID comboId, UUID itemId);
 }

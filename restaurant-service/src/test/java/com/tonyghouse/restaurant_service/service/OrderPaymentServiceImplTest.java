@@ -1,9 +1,7 @@
 package com.tonyghouse.restaurant_service.service;
 
 import com.tonyghouse.restaurant_service.constants.OrderStatus;
-import com.tonyghouse.restaurant_service.constants.payment.PaymentStatus;
 import com.tonyghouse.restaurant_service.dto.InitiatePaymentRequest;
-import com.tonyghouse.restaurant_service.dto.PaymentCallbackRequest;
 import com.tonyghouse.restaurant_service.dto.PriceBreakdown;
 import com.tonyghouse.restaurant_service.dto.RefundRequestDto;
 import com.tonyghouse.restaurant_service.dto.payment.CreatePaymentResponse;
@@ -99,38 +97,6 @@ class OrderPaymentServiceImplTest {
                 () -> service.initiatePayment(orderId, new InitiatePaymentRequest()));
     }
 
-    @Test
-    void handleCallback_success() {
-        UUID orderId = UUID.randomUUID();
-        UUID paymentId = UUID.randomUUID();
-
-        Order order = new Order();
-        order.setPaymentId(paymentId);
-
-        PaymentCallbackRequest req = new PaymentCallbackRequest();
-        req.setPaymentId(paymentId);
-        req.setStatus(PaymentStatus.SUCCESS);
-
-        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
-
-        service.handleCallback(orderId, req);
-    }
-
-    @Test
-    void handleCallback_paymentMismatch() {
-        UUID orderId = UUID.randomUUID();
-
-        Order order = new Order();
-        order.setPaymentId(UUID.randomUUID());
-
-        PaymentCallbackRequest req = new PaymentCallbackRequest();
-        req.setPaymentId(UUID.randomUUID());
-
-        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
-
-        assertThrows(RestoRestaurantException.class,
-                () -> service.handleCallback(orderId, req));
-    }
 
     @Test
     void retryPayment_orderNotFound() {
@@ -188,34 +154,6 @@ class OrderPaymentServiceImplTest {
 
         assertThrows(RestoRestaurantException.class,
                 () -> service.initiatePayment(orderId, new InitiatePaymentRequest()));
-    }
-
-    @Test
-    void handleCallback_orderNotFound() {
-        UUID orderId = UUID.randomUUID();
-
-        Mockito.when(orderRepository.findById(orderId))
-                .thenReturn(Optional.empty());
-
-        assertThrows(RestoRestaurantException.class,
-                () -> service.handleCallback(orderId, new PaymentCallbackRequest()));
-    }
-
-    @Test
-    void handleCallback_successBranch() {
-        UUID orderId = UUID.randomUUID();
-        UUID paymentId = UUID.randomUUID();
-
-        Order order = new Order();
-        order.setPaymentId(paymentId);
-
-        PaymentCallbackRequest req = new PaymentCallbackRequest();
-        req.setPaymentId(paymentId);
-        req.setStatus(PaymentStatus.SUCCESS);
-
-        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
-
-        assertDoesNotThrow(() -> service.handleCallback(orderId, req));
     }
 
 }

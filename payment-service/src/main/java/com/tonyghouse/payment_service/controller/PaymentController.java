@@ -99,6 +99,6 @@ public class PaymentController {
         log.info("Refund completed. refundId={}, paymentId={}",
                 refund.getRefundId(), paymentId);
 
-        return ResponseEntity.ok(PaymentMapper.toRefundResponse(refund));
+        return ResponseEntity.ok(PaymentMapper.toRefundResponse(refund, paymentId));
     }
 }

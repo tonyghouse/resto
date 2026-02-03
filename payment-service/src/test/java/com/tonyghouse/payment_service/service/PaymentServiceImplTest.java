@@ -54,7 +54,6 @@ class PaymentServiceImplTest {
     @Test
     void createPayment_success() {
         UUID orderId = UUID.randomUUID();
-        UUID paymentId = UUID.randomUUID();
 
         CreatePaymentRequest req = new CreatePaymentRequest();
         req.setOrderId(orderId);
@@ -64,19 +63,18 @@ class PaymentServiceImplTest {
 
         Mockito.when(idempotencyKeyRepository.findPaymentId("key"))
                 .thenReturn(Optional.empty());
-        Mockito.when(paymentRepository.save(Mockito.any()))
-                .thenAnswer(i -> {
-                    Payment p = i.getArgument(0);
-                    p.setPaymentId(paymentId);
-                    return p;
-                });
+
+        Mockito.when(paymentRepository.save(Mockito.any(Payment.class)))
+                .thenAnswer(i -> i.getArgument(0)); // returning same object
 
         Payment payment = service.createPayment(req, "key");
 
         assertEquals(PaymentStatus.INITIATED, payment.getStatus());
+
         Mockito.verify(idempotencyKeyRepository)
-                .save("key", payment.getPaymentId());
+                .save(Mockito.eq("key"), Mockito.any(Payment.class));
     }
+
 
     @Test
     void createPayment_idempotent() {

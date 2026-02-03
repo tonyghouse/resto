@@ -16,6 +16,7 @@ import org.mockito.quality.Strictness;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,15 +55,28 @@ class OrderServiceImplTest {
 
     @Test
     void create_branchNotFound() {
-        CreateOrderRequest req = new CreateOrderRequest();
-        req.setBranchId(UUID.randomUUID());
 
-        when(branchRepository.findById(any()))
+        UUID branchId = UUID.randomUUID();
+
+        CreateOrderRequest req = new CreateOrderRequest();
+        req.setBranchId(branchId);
+        req.setItems(Collections.emptyList());
+
+        PriceBreakdown breakdown = new PriceBreakdown();
+        breakdown.setGrandTotal(BigDecimal.ZERO);
+        breakdown.setItemsTotal(BigDecimal.ZERO);
+        breakdown.setTax(BigDecimal.ZERO);
+
+        when(pricingService.calculate(any()))
+                .thenReturn(breakdown);
+
+        when(branchRepository.findById(branchId))
                 .thenReturn(Optional.empty());
 
         assertThrows(RestoRestaurantException.class,
                 () -> service.create(req));
     }
+
 
     @Test
     void create_success_itemFlow() {

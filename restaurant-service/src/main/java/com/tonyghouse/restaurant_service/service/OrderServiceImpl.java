@@ -20,6 +20,7 @@ import com.tonyghouse.restaurant_service.repo.MenuItemRepository;
 import com.tonyghouse.restaurant_service.repo.OrderItemRepository;
 import com.tonyghouse.restaurant_service.repo.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -44,14 +46,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse create(CreateOrderRequest request) {
+        log.info("Creating order. branchId={} customerName={} itemsCount={}",
+                request.getBranchId(), request.getCustomerName(), request.getItems()!=null ? request.getItems().size() : null);
 
         PriceBreakdown breakdown =
                 pricingService.calculate(request.getItems());
+        log.debug("Price breakdown calculated. grandTotal={} tax={} itemsTotal={}",
+                breakdown.getGrandTotal(), breakdown.getTax(), breakdown.getItemsTotal());
+
 
         Order order = new Order();
         UUID branchId = request.getBranchId();
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new RestoRestaurantException("Branch not found", HttpStatus.NOT_FOUND));
+        log.debug("Branch found. branchId={}", branchId);
+
 
         order.setBranch(branch);
         order.setCustomerName(request.getCustomerName());
@@ -61,9 +70,12 @@ public class OrderServiceImpl implements OrderService {
         order.setCreatedAt(Instant.now(clock));
 
         order = orderRepository.save(order);
+        log.info("Order created. orderId={} totalAmount={}", order.getId(), order.getTotalAmount());
+
 
         for (OrderItemRequest req : request.getItems()) {
-
+            log.debug("Processing order item. type={} id={} qty={}",
+                    req.getItemType(), req.getItemId(), req.getQuantity());
             OrderItem item = new OrderItem();
             item.setOrder(order);
             item.setItemType(req.getItemType());
@@ -85,19 +97,24 @@ public class OrderServiceImpl implements OrderService {
                     item.getUnitPrice()
                             .multiply(BigDecimal.valueOf(item.getQuantity()))
             );
+            log.debug("Order item total calculated. itemName={} lineTotal={}",
+                    item.getItemName(), item.getTotalPrice());
 
             orderItemRepository.save(item);
         }
 
+        log.info("Order creation complete. orderId={} itemsCount={} grandTotal={}",
+                order.getId(), request.getItems().size(), breakdown.getGrandTotal());
         return OrderMapper.toResponse(order, breakdown);
     }
 
     @Override
     public OrderResponse get(UUID orderId) {
+        log.debug("Fetching order. orderId={}", orderId);
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-
+        log.debug("Order found. orderId={} totalAmount={}", orderId, order.getTotalAmount());
         PriceBreakdown breakdown = new PriceBreakdown();
         breakdown.setGrandTotal(order.getTotalAmount());
         return OrderMapper.toResponse(order, breakdown);
@@ -105,7 +122,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PricePreviewResponse preview(CreateOrderRequest request) {
-
+        log.debug("Previewing order price. branchId={} itemsCount={}",
+                request.getBranchId(), request.getItems()!=null ? request.getItems().size() : 0);
         PricePreviewResponse response = new PricePreviewResponse();
         response.setBreakdown(
                 pricingService.calculate(request.getItems())

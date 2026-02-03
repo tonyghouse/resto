@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -38,13 +37,13 @@ public class ComboController {
     @PreAuthorize("hasRole('ADMIN')")
     public ComboResponse create(@Valid @RequestBody CreateComboRequest request) {
 
-        log.info("Create combo request received. name={}", request.getName());
+        log.info("Create combo request received. name={} and branchId={}", request.getName(), request.getBranchId());
         log.debug("CreateComboRequest payload={}", request);
 
-        ComboResponse response = service.create(request);
+        ComboResponse response = service.createCombo(request);
 
-        log.info("Combo created successfully. comboId={}, name={}",
-                response.getId(), response.getName());
+        log.info("Combo created successfully. comboId={}, name={} and branchId={}",
+                response.getId(), response.getName(), response.getBranchId());
 
         return response;
     }
@@ -56,7 +55,7 @@ public class ComboController {
 
         log.debug("Fetching combo. comboId={}", comboId);
 
-        return service.get(comboId);
+        return service.getCombo(comboId);
     }
 
 
@@ -64,7 +63,7 @@ public class ComboController {
     @PreAuthorize("hasRole('ADMIN')")
     public Page<ComboResponse> list(Pageable pageable) {
         log.debug("Listing combos with paging: {}", pageable);
-        Page<ComboResponse> combos = service.getAll(pageable);
+        Page<ComboResponse> combos = service.getCombos(pageable);
         log.info("Combos fetched successfully. count={}", combos.getTotalElements());
 
         return combos;
@@ -81,7 +80,7 @@ public class ComboController {
         log.info("Updating combo. comboId={}", comboId);
         log.debug("UpdateComboRequest payload={}", request);
 
-        ComboResponse response = service.update(comboId, request);
+        ComboResponse response = service.updateCombo(comboId, request);
 
         log.info("Combo updated successfully. comboId={}", comboId);
 
@@ -98,7 +97,7 @@ public class ComboController {
         log.info("Updating combo status. comboId={}, active={}",
                 comboId, request.getActive());
 
-        ComboResponse response = service.updateStatus(comboId, request.getActive());
+        ComboResponse response = service.updateComboStatus(comboId, request.getActive());
 
         log.info("Combo status updated successfully. comboId={}, active={}",
                 comboId, request.getActive());
@@ -114,7 +113,7 @@ public class ComboController {
             @RequestParam UUID itemId) {
 
         log.info("Adding item to combo. comboId={}, itemId={}", comboId, itemId);
-        service.addItem(comboId, itemId);
+        service.addItemToCombo(comboId, itemId);
         log.info("Item added successfully. comboId={}, itemId={}", comboId, itemId);
     }
 
@@ -125,7 +124,7 @@ public class ComboController {
             @PathVariable UUID comboId,
             @PathVariable UUID itemId) {
         log.warn("Removing item from combo. comboId={}, itemId={}", comboId, itemId);
-        service.removeItem(comboId, itemId);
+        service.removeItemFromCombo(comboId, itemId);
 
         log.warn("Item removed successfully. comboId={}, itemId={}", comboId, itemId);
     }

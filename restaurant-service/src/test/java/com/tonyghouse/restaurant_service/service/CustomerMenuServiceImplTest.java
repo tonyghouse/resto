@@ -114,13 +114,14 @@ class CustomerMenuServiceImplTest {
 
     @Test
     void getActiveCombos_success() {
+        UUID branchId = UUID.randomUUID();
         Combo combo = new Combo();
 
-        Mockito.when(comboRepository.findByActiveTrue())
+        Mockito.when(comboRepository.findByActiveTrueAndBranch_Id(branchId))
                 .thenReturn(List.of(combo));
 
         List<ComboSummaryResponse> res =
-                service.getActiveCombos(UUID.randomUUID());
+                service.getActiveCombos(branchId);
 
         assertEquals(1, res.size());
     }

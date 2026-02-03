@@ -61,11 +61,12 @@ class ComboControllerTest {
         CreateComboRequest request = new CreateComboRequest();
         request.setName("Weekend Combo");
         request.setComboPrice(BigDecimal.valueOf(100.00));
+        request.setBranchId(UUID.randomUUID());
 
         ComboResponse response = new ComboResponse();
         response.setId(UUID.randomUUID());
 
-        Mockito.when(comboService.create(any()))
+        Mockito.when(comboService.createCombo(any()))
                 .thenReturn(response);
 
         mockMvc.perform(post("/api/combos")
@@ -84,12 +85,15 @@ class ComboControllerTest {
         ComboResponse response = new ComboResponse();
         response.setId(comboId);
 
-        Mockito.when(comboService.get(comboId))
+        Mockito.when(comboService.getCombo(comboId))
                 .thenReturn(response);
 
-        mockMvc.perform(get("/api/combos/{comboId}", comboId))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/combos/{comboId}", comboId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(comboId.toString()));
     }
+
 
     @Test
     @WithMockUser(roles = "ADMIN")
@@ -103,7 +107,7 @@ class ComboControllerTest {
         Page<ComboResponse> page =
                 new PageImpl<>(content, PageRequest.of(0, 20), content.size());
 
-        Mockito.when(comboService.getAll(Mockito.any(Pageable.class)))
+        Mockito.when(comboService.getCombos(Mockito.any(Pageable.class)))
                 .thenReturn(page);
 
         mockMvc.perform(get("/api/combos")
@@ -127,7 +131,7 @@ class ComboControllerTest {
         ComboResponse response = new ComboResponse();
         response.setId(comboId);
 
-        Mockito.when(comboService.update(eq(comboId), any()))
+        Mockito.when(comboService.updateCombo(eq(comboId), any()))
                 .thenReturn(response);
 
         mockMvc.perform(put("/api/combos/{comboId}", comboId)
@@ -149,7 +153,7 @@ class ComboControllerTest {
         ComboResponse response = new ComboResponse();
         response.setId(comboId);
 
-        Mockito.when(comboService.updateStatus(comboId, true))
+        Mockito.when(comboService.updateComboStatus(comboId, true))
                 .thenReturn(response);
 
         mockMvc.perform(patch("/api/combos/{comboId}/status", comboId)
@@ -171,7 +175,7 @@ class ComboControllerTest {
                         .param("itemId", itemId.toString()))
                 .andExpect(status().isOk());
 
-        Mockito.verify(comboService).addItem(comboId, itemId);
+        Mockito.verify(comboService).addItemToCombo(comboId, itemId);
     }
 
     @Test
@@ -185,7 +189,7 @@ class ComboControllerTest {
                         .with(csrf()))
                 .andExpect(status().isOk());
 
-        Mockito.verify(comboService).removeItem(comboId, itemId);
+        Mockito.verify(comboService).removeItemFromCombo(comboId, itemId);
     }
 
     @Test

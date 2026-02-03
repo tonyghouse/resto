@@ -1,11 +1,16 @@
 package com.tonyghouse.payment_service.repo;
 
+import com.tonyghouse.payment_service.constants.PaymentMethod;
+import com.tonyghouse.payment_service.constants.PaymentStatus;
+import com.tonyghouse.payment_service.constants.RefundStatus;
+import com.tonyghouse.payment_service.entity.Payment;
 import com.tonyghouse.payment_service.entity.Refund;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -14,6 +19,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +47,10 @@ class RefundRepositoryTest {
 
     @Autowired
     private RefundRepository repo;
+
+
+    @Autowired
+    private TestEntityManager entityManager;
 
 
     @Test
@@ -92,13 +103,34 @@ class RefundRepositoryTest {
     }
 
 
-    // helper
     private void saveRefund(UUID paymentId, String amount) {
+        Payment payment = entityManager.find(Payment.class, paymentId);
+        if (payment == null) {
+            payment = new Payment();
+            payment.setPaymentId(paymentId);
+            payment.setOrderId(UUID.randomUUID());
+            payment.setMethod(PaymentMethod.UPI);
+            payment.setStatus(PaymentStatus.INITIATED);
+            payment.setTotalAmount(new BigDecimal("100"));
+            payment.setTaxAmount(new BigDecimal("20"));
+            payment.setPayableAmount(new BigDecimal("120"));
+            payment.setCurrency("INR");
+            payment.setRetryCount(0);
+            payment.setCreatedAt(Instant.now());
+            payment.setRefunds(new ArrayList<>());
+            payment.setIdempotencyKeys(new ArrayList<>());
+            entityManager.persist(payment);
+        }
+
         Refund r = new Refund();
         r.setRefundId(UUID.randomUUID());
-        r.setPaymentId(paymentId);
+        r.setPayment(payment);
         r.setRefundAmount(new BigDecimal(amount));
+        r.setStatus(RefundStatus.SUCCESS);
 
-        repo.save(r);
+        repo.saveAndFlush(r);
     }
+
+
+
 }
